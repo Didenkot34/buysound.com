@@ -15,8 +15,8 @@ class CreateJunctionTableForSongsAndStylesTables extends Migration
     {
         Schema::create('songs_styles', function (Blueprint $table) {
 
-            $table->integer('songs_id');
-            $table->integer('styles_id');
+            $table->integer('songs_id')->unsigned();
+            $table->integer('styles_id')->unsigned();
             $table->primary(['songs_id', 'styles_id']);
 
             $table->foreign('songs_id')
