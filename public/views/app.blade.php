@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" ng-app="app">
+<html lang="en" ng-app="app" ng-cloak>
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -12,6 +12,7 @@
 
     <!-- Styles -->
     <link href="/css/app.css" rel="stylesheet">
+    <link rel="stylesheet" href="/angular/node_modules/angular-material/angular-material.min.css">
 
     <!-- Scripts -->
     <script>
@@ -89,6 +90,10 @@
     <!-- Scripts -->
     <script src="/js/app.js"></script>
     <script src="/angular/node_modules/angular/angular.min.js"></script>
+    <script src="/angular/node_modules/angular-animate/angular-animate.min.js"></script>
+    <script src="/angular/node_modules/angular-aria/angular-aria.min.js"></script>
+    <script src="/angular/node_modules/angular-messages/angular-messages.min.js"></script>
+    <script src="/angular/node_modules/angular-material/angular-material.min.js"></script>
     <script src="/angular/node_modules/ui-router/angular-ui-router.min.js"></script>
     <script src="/angular/node_modules/ui-bootstrap/ui-bootstrap-tpls-2.2.0.min.js"></script>
     <script src="/angular/app.js"></script>

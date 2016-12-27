@@ -25,6 +25,14 @@
                 templateUrl: 'views/about/about.blade.php',
                 controller: function ($scope) {
                     $scope.title = 'About2';
+                    $scope.addedToFavorite = false;
+                    $scope.addToFavorite = function () {
+                        if ($scope.addedToFavorite) {
+                            $scope.addedToFavorite = false; 
+                        } else {
+                            $scope.addedToFavorite = true;
+                        }
+                    }
                 }
             });
         $stateProvider

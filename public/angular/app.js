@@ -5,6 +5,9 @@
     angular
         .module('app',[
             'ui.router',
-            'ui.bootstrap'
+            'ui.bootstrap',
+            // 'ngAnimate',
+            'ngMaterial',
+            'ngMessages'
         ]);
 })();
