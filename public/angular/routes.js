@@ -16,15 +16,16 @@
         $stateProvider
             .state('home', {
                 url: '/',
-                templateUrl: 'views/home/home.blade.php',
+                templateUrl: '/views/home/home.blade.php',
                  controller: 'groupAdminCtrl'
             });
         $stateProvider
             .state('about', {
                 url: '/about',
                 templateUrl: 'views/about/about.blade.php',
-                controller: function ($scope) {
+                controller: function ($scope, $rootScope) {
                     $scope.title = 'About2';
+                   // $rootScope.title2 = 'About';
                     $scope.addedToFavorite = false;
                     $scope.addToFavorite = function () {
                         if ($scope.addedToFavorite) {
@@ -38,8 +39,8 @@
         $stateProvider
             .state('admin', {
                 url: '/admin',
-                templateUrl: 'template/admin/admin.html',
-                controller: 'AdminGroupsCtrl'
+                templateUrl: '/views/admin/admin.blade.php',
+                controller: 'groupAdminCtrl'
             });
     }
 })();

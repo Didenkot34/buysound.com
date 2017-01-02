@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" ng-app="app" ng-cloak>
+<html lang="en" ng-app="app" ng-cloak class="ng-cloak">
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -23,63 +23,62 @@
 </head>
 <body>
     <div id="app">
-        <nav class="navbar navbar-default navbar-static-top">
-            <div class="container">
-                <div class="navbar-header">
+                {{--<md-fab-toolbar md-open="false" count="0"--}}
+                {{--md-direction="left">--}}
+                {{--<md-fab-trigger class="align-with-text">--}}
+                {{--<md-button aria-label="menu" class="md-fab md-primary">--}}
+                {{--<md-icon md-svg-src="img/icons/menu-wite.svg"></md-icon>--}}
+                {{--</md-button>--}}
+                {{--</md-fab-trigger>--}}
 
-                    <!-- Collapsed Hamburger -->
-                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#app-navbar-collapse">
-                        <span class="sr-only">Toggle Navigation</span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                    </button>
+                {{--<md-toolbar>--}}
+                {{--<md-fab-actions class="md-toolbar-tools">--}}
+                {{--<md-button aria-label="comment" class="md-icon-button">--}}
+                {{--<a ui-sref='home'> <md-icon md-svg-src="/img/icons/favorite.svg"></md-icon></a>--}}
+                {{--</md-button>--}}
+                {{--<md-button aria-label="label" class="md-icon-button">--}}
+                {{--<a ui-sref='about'><md-icon md-svg-src="/img/icons/list.svg"></md-icon></a>--}}
+                {{--</md-button>--}}
+                {{--<md-button aria-label="photo" class="md-icon-button">--}}
+                {{--<md-icon md-svg-src="/img/icons/share.svg"></md-icon>--}}
+                {{--</md-button>--}}
+                {{--</md-fab-actions>--}}
+                {{--</md-toolbar>--}}
+                {{--</md-fab-toolbar>--}}
 
-                    <!-- Branding Image -->
-                    <a class="navbar-brand" href="{{ url('/') }}">
-                        {{ config('app.name', 'Laravel') }}
-                    </a>
-                </div>
 
-                <div class="collapse navbar-collapse" id="app-navbar-collapse">
-                    <!-- Left Side Of Navbar -->
-                    <ul class="nav navbar-nav">
-                        &nbsp;
-                    </ul>
+                <md-fab-speed-dial md-direction="right" md-open="false"
+                                   class="md-fling">
+                    <md-fab-trigger>
+                        <md-button aria-label="menu" class="md-fab md-primary">
+                            <md-tooltip md-direction="down">
+                                Меню
+                            </md-tooltip>
+                            <md-icon md-svg-src="/img/icons/menu-wite.svg"></md-icon>
+                        </md-button>
+                    </md-fab-trigger>
 
-                    <!-- Right Side Of Navbar -->
-                    <ul class="nav navbar-nav navbar-right">
-                        <!-- Authentication Links -->
-                            <li><a ui-sref="home">Home</a></li>
-                            <li><a ui-sref="about">About</a></li>
-                        @if (Auth::guest())
-                            <li><a href="{{ url('/login') }}">Login</a></li>
-                            <li><a href="{{ url('/register') }}">Register</a></li>
-                        @else
-                            <li class="dropdown">
-                                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-                                    {{ Auth::user()->name }} <span class="caret"></span>
-                                </a>
-
-                                <ul class="dropdown-menu" role="menu">
-                                    <li>
-                                        <a href="{{ url('/logout') }}"
-                                            onclick="event.preventDefault();
-                                                     document.getElementById('logout-form').submit();">
-                                            Logout
-                                        </a>
-
-                                        <form id="logout-form" action="{{ url('/logout') }}" method="POST" style="display: none;">
-                                            {{ csrf_field() }}
-                                        </form>
-                                    </li>
-                                </ul>
-                            </li>
-                        @endif
-                    </ul>
-                </div>
-            </div>
-        </nav>
+                    <md-fab-actions>
+                        <a ui-sref='home' aria-label="Главная" class="md-button md-fab md-raised md-mini">
+                            <md-tooltip md-direction="down">
+                                Главная
+                            </md-tooltip>
+                            <md-icon md-svg-src="/img/icons/home-icon-silhouette.svg"></md-icon>
+                        </a>
+                        <a ui-sref='admin' aria-label="Admin" class="md-button md-fab md-raised md-mini">
+                            <md-tooltip md-direction="down">
+                                Admin
+                            </md-tooltip>
+                            <md-icon md-svg-src="/img/icons/admin.svg"></md-icon>
+                        </a>
+                        <a ui-sref='about' aria-label="Google Hangout" class=" md-button md-fab md-raised md-mini">
+                            <md-tooltip md-direction="down">
+                                О нас
+                            </md-tooltip>
+                            <md-icon md-svg-src="/img/icons/share.svg"></md-icon>
+                        </a>
+                    </md-fab-actions>
+                </md-fab-speed-dial>
         <div class="container">
             <ui-view>
 
