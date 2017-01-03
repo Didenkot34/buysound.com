@@ -59,23 +59,23 @@
                     </md-fab-trigger>
 
                     <md-fab-actions>
-                        <a ui-sref='home' aria-label="Главная" class="md-button md-fab md-raised md-mini">
+                        <a ui-sref='home' ui-sref-active="md-primary" aria-label="Главная" class="md-button md-fab md-raised md-mini">
                             <md-tooltip md-direction="down">
                                 Главная
                             </md-tooltip>
-                            <md-icon md-svg-src="/img/icons/home-icon-silhouette.svg"></md-icon>
+                            <md-icon md-svg-src="/img/icons/home-icon-84E4FA.svg"></md-icon>
                         </a>
-                        <a ui-sref='admin' aria-label="Admin" class="md-button md-fab md-raised md-mini">
+                        <a ui-sref='admin' ui-sref-active="md-primary" aria-label="Admin" class="md-button md-fab md-raised md-mini">
                             <md-tooltip md-direction="down">
                                 Admin
                             </md-tooltip>
                             <md-icon md-svg-src="/img/icons/admin.svg"></md-icon>
                         </a>
-                        <a ui-sref='about' aria-label="Google Hangout" class=" md-button md-fab md-raised md-mini">
+                        <a ui-sref='about' ui-sref-active="md-primary" aria-label="Google Hangout" class=" md-button md-fab md-raised md-mini">
                             <md-tooltip md-direction="down">
                                 О нас
                             </md-tooltip>
-                            <md-icon md-svg-src="/img/icons/share.svg"></md-icon>
+                            <md-icon md-svg-src="/img/icons/share-84E4FA.svg"></md-icon>
                         </a>
                     </md-fab-actions>
                 </md-fab-speed-dial>

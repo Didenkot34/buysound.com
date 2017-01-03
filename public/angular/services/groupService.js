@@ -12,8 +12,6 @@
 
             // get all the groups
             getAll : function() {
-
-                 console.log($('meta[name="csrf-token"]').attr('content'));
                 // return $http.get('/api/groups');
                 return $http({
                     method: 'GET',
