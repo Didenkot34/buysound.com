@@ -17,7 +17,7 @@ class CreateGroupsTable extends Migration
             $table->increments('id');
             $table->string('name')->unique();
             $table->string('slug')->unique();
-            $table->string('description');
+            $table->text('description');
             $table->string('img');
             $table->tinyInteger('rating')->unsigned()->default(1);
             $table->boolean('active')->default(false);

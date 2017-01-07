@@ -40,6 +40,18 @@
                     data: groupData
                 });
             },
+            uploadImg : function (img) {
+                return $http({
+                    method: 'POST',
+                    url: '/api/upload-group-img',
+                    transformRequest: angular.identity,
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
+                        'Content-Type': undefined
+                    },
+                    data: img
+                });
+            },
             
             // update a groups (pass in comment data)
             update : function(groupData, id) {
@@ -52,7 +64,7 @@
             },
 
             // deleted a group
-            delete : function(id) {
+            deleteGroup : function(id) {
                 return $http.delete('/api/groups/' + id);
             }
         }

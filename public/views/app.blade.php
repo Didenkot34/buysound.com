@@ -88,6 +88,7 @@
 
     <!-- Scripts -->
     <script src="/js/app.js"></script>
+    <script src="/js/lodash/lodash.min.js"></script>
     <script src="/angular/node_modules/angular/angular.min.js"></script>
     <script src="/angular/node_modules/angular-animate/angular-animate.min.js"></script>
     <script src="/angular/node_modules/angular-aria/angular-aria.min.js"></script>
@@ -98,6 +99,7 @@
     <script src="/angular/app.js"></script>
     <script src="/angular/routes.js"></script>
     <script src="/angular/services/groupService.js"></script>
+    <script src="/angular/directives/fileInputDirective.js"></script>
     <script src="/angular/controllers/groupAdminController.js"></script>
 </body>
 </html>
