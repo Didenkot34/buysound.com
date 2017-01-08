@@ -74,4 +74,35 @@ class GroupController extends AppController
             'info' => $imgPath
         ]);
     }
+    public function updateGroups(Request $request,$id)
+    {
+
+        $imgNew = $request->input('imgNew');
+        $imgOld = $request->input('img');
+        $imageName = false;
+
+        $update = [
+            'name' => $request->input('name'),
+            'slug' => str_slug($request->input('name')),
+            'description' => $request->input('description'),
+            'rating' => $request->input('rating'),
+            'active' => $request->input('active')== 'true' ? 1 : 0,
+        ];
+
+        if ($imgNew) {
+            $imgPath = $this->createPath('groups',$id) . '/' . $imgOld;
+            $imageName = str_random(15) . '.' . $request->input('imgNew');
+            $update = array_add($update, 'img', $imageName);
+
+            $this->deleteFile($imgPath);
+        }
+
+        Group::where('id', $id)->update($update);
+
+        return response()->json([
+            'id' => $id,
+            'imageName' => $imageName,
+            'update' => $update,
+        ]);
+    }
 }

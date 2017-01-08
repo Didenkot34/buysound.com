@@ -62,7 +62,7 @@
 
 <md-button class="md-raised md-primary" ng-click="predicate = 'name'; reverse=false">Name</md-button>
 <md-button class="md-raised md-primary" ng-click="predicate = 'description'; reverse=false">Description</md-button>
-    <div flex-xs flex-gt-xs="50" layout="column" ng-repeat="group in groups | orderBy:predicate:reverse">
+    <div layout="column" ng-repeat="group in groups | orderBy:predicate:reverse">
         <md-card>
             <md-card-title>
                 <md-card-title-text>
@@ -76,8 +76,18 @@
                 </md-card-title-media>
             </md-card-title>
             <md-card-actions layout="row" layout-align="end center">
-                <md-button ng-click="deleteGroup(group.id)">Action 1</md-button>
-                <md-button>Action 2</md-button>
+                <md-button ng-click="editGroup($event,group)" aria-label="Edit" class="md-fab md-mini md-raised">
+                    <md-tooltip md-direction="down">
+                        Edit
+                    </md-tooltip>
+                    <md-icon md-svg-src="/img/icons/edit.svg"></md-icon>
+                </md-button>
+                <md-button ng-click="deleteGroup($event,group)" aria-label="delete" class="md-fab md-mini md-raised">
+                    <md-tooltip md-direction="down">
+                        Delete
+                    </md-tooltip>
+                    <md-icon md-svg-src="/img/icons/delete.svg"></md-icon>
+                </md-button>
             </md-card-actions>
         </md-card>
     </div>

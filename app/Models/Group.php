@@ -12,4 +12,14 @@ class Group extends Model
      * @var string
      */
     protected $table = 'groups';
+
+    public function getActiveAttribute($value)
+    {
+        return $value ? true : false;
+    }
+
+    public function setActiveAttribute($value)
+    {
+        $this->attributes['active'] = $value ? 1 : 0;
+    }
 }

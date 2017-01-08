@@ -4,11 +4,11 @@
         .module('app')
         .controller('groupAdminCtrl', groupAdminCtrl);
 
-    groupAdminCtrl.$inject = ['$scope', 'groupService', '$mdToast'];
+    groupAdminCtrl.$inject = ['$scope', 'groupService', '$mdToast', '$mdDialog'];
 
-    function groupAdminCtrl($scope, groupService, $mdToast) {
+    function groupAdminCtrl($scope, groupService, $mdToast, $mdDialog) {
 
-        $scope.getAllGroups();
+
 
         $scope.getAllGroups = function () {
             groupService.getAll()
@@ -22,6 +22,7 @@
                     console.log('Error Get All');
                 });
         };
+        $scope.getAllGroups();
         $scope.createGroup = function (groupData) {
 
             groupData.img = getImgOriginalExtension();
@@ -48,14 +49,47 @@
 
         };
         
-        $scope.deleteGroup = function (id) {
-            groupService.deleteGroup(id)
-                .then(function successCallback(response) {
-                    $scope.getAllGroups();
-                }, function errorCallback() {
-                    console.log('Error');
-                });
+        $scope.deleteGroup = function (ev,group) {
+            
+            var confirm = $mdDialog.confirm()
+                .title('Would you like to delete ' + group.name +'?')
+                .textContent('All of the banks have agreed to forgive you your debts.')
+                .targetEvent(ev)
+                .ok('Yes!')
+                .cancel('No');
+
+            $mdDialog.show(confirm).then(function() {
+                
+                groupService.deleteGroup(group.id)
+                    .then(function successCallback(response) {
+                        $scope.getAllGroups();
+                    }, function errorCallback() {
+                        console.log('Error');
+                    });
+            }, function() {
+                console.log('Did\'t delete this group')
+            });
+
         };
+
+            $scope.editGroup = function (ev, group) {
+
+                $mdDialog.show({
+                    controller: 'DialogEditGroupCtrl',
+                    templateUrl: '/views/dialogEdit.blade.php',
+                    parent: angular.element(document.body),
+                    targetEvent: ev,
+                    locals: {
+                        items: group
+                    },
+                    clickOutsideToClose:true,
+                    fullscreen: true
+                }).then(function(answer) {
+                        $scope.getAllGroups();
+                        //groupService.update()
+                    }, function() {
+                    });
+            };
 
         function getImgOriginalExtension() {
 

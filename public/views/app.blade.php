@@ -100,6 +100,7 @@
     <script src="/angular/routes.js"></script>
     <script src="/angular/services/groupService.js"></script>
     <script src="/angular/directives/fileInputDirective.js"></script>
+    <script src="/angular/controllers/dialog/DialogEditGroupController.js"></script>
     <script src="/angular/controllers/groupAdminController.js"></script>
 </body>
 </html>

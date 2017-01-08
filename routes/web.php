@@ -19,5 +19,6 @@ Auth::routes();
 //
 Route::get('/api/groups', 'Group\GroupController@getAll');
 Route::post('/api/groups', 'Group\GroupController@save');
+Route::put('/api/groups/{id}', 'Group\GroupController@updateGroups');
 Route::delete('/api/groups/{id}', 'Group\GroupController@deleteGroups');
 Route::post('/api/upload-group-img', 'Group\GroupController@uploadImg');
