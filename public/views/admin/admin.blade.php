@@ -3,13 +3,13 @@
 <h3>Create Group</h3>
 
 <md-content layout-padding>
-    <form name="projectForm">
+    <form name="groupForm">
 
         <div layout="row">
             <md-input-container flex="40">
                 <label>Название Группы</label>
                 <input required name="name" ng-model="group.name">
-                <div ng-messages="projectForm.name.$error">
+                <div ng-messages="groupForm.name.$error">
                     <div ng-message="required">This is required.</div>
                 </div>
             </md-input-container>
@@ -21,6 +21,9 @@
                     <md-option value="2">Средний</md-option>
                     <md-option value="3">Низкий</md-option>
                 </md-select>
+                <div ng-messages="groupForm.rating.$error">
+                    <div ng-message="required">This is required.</div>
+                </div>
             </md-input-container>
             <md-input-container flex="20">
                 <md-checkbox
@@ -34,7 +37,7 @@
         <md-input-container class="md-block">
             <label>Description</label>
             <textarea ng-model="group.description" required md-no-asterisk name="description"  md-maxlength="450" rows="5" md-select-on-focus></textarea>
-            <div ng-messages="projectForm.description.$error">
+            <div ng-messages="groupForm.description.$error">
                 <div ng-message="required">This is required.</div>
                 <div ng-message="md-maxlength">The description must be less than 30 characters long.</div>
             </div>
@@ -45,7 +48,7 @@
             <li ng-repeat ="file in files "> {{file.name}}</li>
 
         <section layout="row" layout-sm="column" layout-align="center center" layout-wrap>
-            <md-button class="md-raised" type="submit" ng-click="createGroup(group)">Submit</md-button>
+            <md-button class="md-raised" type="submit" ng-click="createGroup(group)" ng-disabled="groupForm.$invalid ">Submit</md-button>
         </section>
 
         <p style="font-size:.8em; width: 100%; text-align: center;">
@@ -54,7 +57,12 @@
     </form>
 </md-content>
 
-    <div flex-xs flex-gt-xs="50" layout="column" ng-repeat="group in groups">
+
+
+
+<md-button class="md-raised md-primary" ng-click="predicate = 'name'; reverse=false">Name</md-button>
+<md-button class="md-raised md-primary" ng-click="predicate = 'description'; reverse=false">Description</md-button>
+    <div flex-xs flex-gt-xs="50" layout="column" ng-repeat="group in groups | orderBy:predicate:reverse">
         <md-card>
             <md-card-title>
                 <md-card-title-text>

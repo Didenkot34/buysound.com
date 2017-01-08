@@ -15,7 +15,7 @@ class GroupController extends AppController
     public function getAll()
     {
         return response()->json([
-            'groups' => Group::all(),
+            'groups' => Group::orderBy('rating', 'asc')->get(),
         ]);
     }
 
