@@ -8,10 +8,22 @@
     DialogEditGroupController.$inject = ['$scope', 'groupService', '$mdDialog', 'items', '$mdToast'];
 
     function DialogEditGroupController($scope, groupService, $mdDialog, items, $mdToast) {
-        $scope.group = items;
+
+        $scope.group = items || {};
 
         $scope.title = items ? 'Редактировать "' + items.name +'"' : 'Добавить';
+
+        $scope.ratingValue = [
+            { 'id' : 1, 'name': 'Высокий' },
+            { 'id' : 2, 'name': 'Средний' },
+            { 'id' : 3, 'name': 'Низкий'  }
+        ];
+        $scope.group.rating = items ? items.rating : '3';
         $scope.edit = function (group) {
+
+            if($scope.groupForm.$invalid){
+                return false
+            }
 
             var groupData = angular.copy(group);
 

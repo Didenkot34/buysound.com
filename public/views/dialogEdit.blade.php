@@ -23,10 +23,9 @@
 
                     <md-input-container flex="40">
                         <label>Рейтинг</label>
-                        <md-select name="rating" ng-model="group.rating" required>
-                            <md-option value="1">Высокий</md-option>
-                            <md-option value="2">Средний</md-option>
-                            <md-option value="3">Низкий</md-option>
+
+                        <md-select name="rating" ng-model="group.rating">
+                            <md-option ng-value="rating.id" ng-repeat="rating in ratingValue">{{ rating.name }}</md-option>
                         </md-select>
                         <div ng-messages="groupForm.rating.$error">
                             <div ng-message="required">This is required.</div>
@@ -59,7 +58,7 @@
             <md-button ng-click="cancel(group)">
                 Close
             </md-button>
-            <md-button ng-click="edit(group)">
+            <md-button ng-click="edit(group)" ng-disabled="groupForm.$invalid">
                 Save
             </md-button>
         </md-dialog-actions>
