@@ -1,0 +1,39 @@
+<!-- TODO: Replace table to table component when https://github.com/angular/material/issues/796 will closed -->
+<div class="table-responsive-vertical md-whiteframe-z1">
+    <table id="table" class="table table-hover table-bordered">
+        <thead>
+        <tr>
+            <th>#</th>
+            <th>
+                <md-tooltip md-direction="down">
+                Название группы
+                </md-tooltip>
+                Name
+            </th>
+            <th>Description</th>
+            <th>Action</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr ng-repeat="group in groups track by $index">
+            <td data-title="ID">{{$index + 1}}</td>
+            <td data-title="Issue">{{group.name}}</td>
+            <td data-title="Status">{{group.description}}</td>
+            <td data-title="Progress">
+                <md-button ng-click="editGroup($event,group)" aria-label="Edit" class="md-fab md-mini md-raised">
+                    <md-tooltip md-direction="down">
+                        Edit
+                    </md-tooltip>
+                    <md-icon md-svg-src="/img/icons/edit.svg"></md-icon>
+                </md-button>
+                <md-button ng-click="deleteGroup($event,group)" aria-label="delete" class="md-fab md-mini md-raised">
+                    <md-tooltip md-direction="down">
+                        Delete
+                    </md-tooltip>
+                    <md-icon md-svg-src="/img/icons/delete.svg"></md-icon>
+                </md-button>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>

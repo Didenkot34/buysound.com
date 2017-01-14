@@ -4,8 +4,8 @@
 
     angular
         .module('app',[
-            'ui.router',
-            'ui.bootstrap',
+           // 'ui.router',
+            //'ui.bootstrap',
             // 'ngAnimate',
             'ngMaterial',
             'ngMessages'
