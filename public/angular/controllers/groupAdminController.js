@@ -23,6 +23,7 @@
                 });
         };
         $scope.getAllGroups();
+        
         $scope.createGroup = function (groupData) {
 
             groupData.img = getImgOriginalExtension();
@@ -90,6 +91,25 @@
                     }, function() {
                     });
             };
+        $scope.addGroup = function (ev) {
+
+                $mdDialog.show({
+                    controller: 'DialogEditGroupCtrl',
+                    templateUrl: '/views/dialogEdit.blade.php',
+                    parent: angular.element(document.body),
+                    targetEvent: ev,
+                    locals: {
+                        items: false
+                    },
+                    clickOutsideToClose:true,
+                    fullscreen: true
+                }).then(function(answer) {
+                        $scope.getAllGroups();
+                        //groupService.update()
+                    }, function() {
+                    });
+            };
+
 
         function getImgOriginalExtension() {
 

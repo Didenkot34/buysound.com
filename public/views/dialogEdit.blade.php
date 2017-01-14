@@ -2,7 +2,7 @@
     <form name="groupForm" ng-cloak>
         <md-toolbar>
             <div class="md-toolbar-tools">
-                <h2>{{group.name}}</h2>
+                <h2>{{title}}</h2>
                 <span flex></span>
                 <md-button class="md-icon-button" ng-click="cancel(group)">
                     <md-icon md-svg-src="img/icons/cancel.svg" aria-label="Close dialog"></md-icon>
