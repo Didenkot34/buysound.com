@@ -5,9 +5,9 @@
         .module('app')
         .controller('DialogEditGroupCtrl', DialogEditGroupController);
 
-    DialogEditGroupController.$inject = ['$scope', 'groupService', '$mdDialog', 'items', '$mdToast'];
+    DialogEditGroupController.$inject = ['$scope', 'groupService', '$mdDialog', 'items', '$mdToast', '$timeout'];
 
-    function DialogEditGroupController($scope, groupService, $mdDialog, items, $mdToast) {
+    function DialogEditGroupController($scope, groupService, $mdDialog, items, $mdToast, $timeout) {
 
         $scope.group = items || {};
 
@@ -32,7 +32,7 @@
             } else {
                 if (_.has($scope, 'files.0')) {
 
-                    var match = $scope.files[0].name.match(/[a-zA-Z]{3}$/);
+                    var match = $scope.files[0].lfFileName.match(/[a-zA-Z]{3}$/);
                     groupData.imgNew = match[0];
                 } else {
                     groupData.imgNew = 0;
@@ -41,7 +41,7 @@
                 groupService.update(groupData, groupData.id)
                     .then(function successCallback(response) {
                         if (response.data.imageName) {
-                            updateImg(response);
+                            uploadImg(response);
                         }
                         $mdDialog.hide(groupData);
                     }, function errorCallback() {
@@ -54,29 +54,18 @@
             $mdDialog.hide(group);
         };
 
-        function updateImg(response) {
-            var fd = new FormData();
-            angular.forEach($scope.files, function (file) {
-                fd.append('file', file);
-            });
-            fd.append('id', response.data.id);
-            fd.append('imageName', response.data.imageName);
-
-            groupService.uploadImg(fd)
-                .then(function successCallback(response) {
-                }, function errorCallback() {
-                    console.log('Error Upload');
-                });
-        }
-
         function uploadImg(response) {
-            var fd = new FormData();
-            angular.forEach($scope.files, function (file) {
-                fd.append('file', file);
+
+
+            var formData = new FormData();
+            angular.forEach($scope.files,function(obj){
+                if(!obj.isRemote){
+                    formData.append('file', obj.lfFile);
+                }
             });
-            fd.append('id',response.data.id);
-            fd.append('imageName',response.data.imageName);
-            groupService.uploadImg(fd)
+                formData.append('id',response.data.id);
+                formData.append('imageName',response.data.imageName);
+            groupService.uploadImg(formData)
                 .then(function successCallback(response) {
                    // $scope.getAllGroups();
 
@@ -116,7 +105,7 @@
 
             if (_.has($scope,'files.0')) {
 
-                var match = $scope.files[0].name.match(/[a-zA-Z]{3}$/);
+                var match = $scope.files[0].lfFileName.match(/[a-zA-Z]{3}$/);
 
                 return match[0];
             } else {

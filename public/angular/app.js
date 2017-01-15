@@ -8,6 +8,7 @@
             //'ui.bootstrap',
             // 'ngAnimate',
             'ngMaterial',
-            'ngMessages'
+            'ngMessages',
+            'lfNgMdFileInput'
         ]);
 })();

@@ -48,8 +48,7 @@
                         <div ng-message="md-maxlength">The description must be less than 30 characters long.</div>
                     </div>
                 </md-input-container>
-                <input type="file" file-input="files">
-                <li ng-repeat ="file in files "> {{file.name}}</li>
+                <lf-ng-md-file-input lf-files="files" lf-browse-label="Выбрать файл" lf-remove-label="Удалить"  preview ></lf-ng-md-file-input>
             </div>
         </md-dialog-content>
 

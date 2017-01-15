@@ -13,6 +13,7 @@
     <!-- Styles -->
     <link href="/css/app.css" rel="stylesheet">
     <link rel="stylesheet" href="/angular/node_modules/angular-material/angular-material.min.css">
+    <link rel="stylesheet" href="/angular/node_modules/lf-ng-md-file-input/dist/lf-ng-md-file-input.min.css">
 
     <!-- Scripts -->
     <script>
@@ -53,6 +54,7 @@
     <script src="/angular/node_modules/angular-material/angular-material.min.js"></script>
     <script src="/angular/node_modules/ui-router/angular-ui-router.min.js"></script>
     <script src="/angular/node_modules/ui-bootstrap/ui-bootstrap-tpls-2.2.0.min.js"></script>
+    <script src="/angular/node_modules/lf-ng-md-file-input/dist/lf-ng-md-file-input.min.js"></script>
     <script src="/angular/app.js"></script>
     <script src="/angular/index.js"></script>
     <!--<script src="/angular/routes.js"></script>-->
