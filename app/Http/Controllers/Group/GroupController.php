@@ -21,6 +21,13 @@ class GroupController extends AppController
 
     public function save(Request $request)
     {
+        $messages = [
+            'unique' => 'Имя "' . $request->input('name') . '" уже существует.',
+        ];
+       $this->validate($request, [
+            'name' => 'unique:groups'
+        ], $messages);
+
         $imageName = str_slug($request->input('name')) . '.' . $request->input('img');
 
 
