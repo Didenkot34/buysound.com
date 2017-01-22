@@ -49,6 +49,7 @@
                         if (response.data.imageName) {
                             uploadImg(response);
                         }
+                        showMessageInToaster('Данные успешно измененны', 'success');
                         $mdDialog.hide(groupData);
                     }, function errorCallback() {
                         console.log('Error Update');
@@ -80,12 +81,7 @@
 
             groupData.img = getImgOriginalExtension();
             if (!groupData.img) {
-                $mdToast.show(
-                    $mdToast.simple()
-                        .textContent('Вы забыли загрузить картинку')
-                        .position('bottom right')
-                        .hideDelay(3000)
-                );
+                showMessageInToaster('Вы забыли загрузить картинку','error');
                 return false;
             }
             if (!_.has(groupData, 'active')) {
@@ -96,16 +92,11 @@
             groupService.save(groupData)
                 .then(function successCallback(response) {
                     uploadImg(response);
+                    showMessageInToaster('Сохраннено', 'success');
                     $mdDialog.hide(groupData);
                 }, function errorCallback(response) {
                    var message = _.get(response, 'data.name.0', 'Произошла системная ошибка, попробуйте позже');
-                    $mdToast.show(
-                        {
-                            template: '<md-toast class="md-toast">' + message + '</md-toast>',
-                            hideDelay: 2000,
-                            position: 'bottom right'
-                        }
-                        );
+                    showMessageInToaster(message, 'error');
                 });
 
         };
@@ -121,6 +112,21 @@
 
                 return false;
             }
+        }
+
+        function showMessageInToaster(message,type) {
+            $mdToast.show(
+                {
+                    template: '<md-toast  class="md-toast ">'
+                    + '<div class="md-toast-content">'
+                    + message +
+                    '</div>' +
+                    '</md-toast>',
+                    hideDelay: 3000,
+                    position: 'bottom right',
+                    toastClass: 'md-toast-' + type
+                }
+            );
         }
     }
 })();

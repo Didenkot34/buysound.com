@@ -12,6 +12,7 @@
 
     <!-- Styles -->
     <link href="/css/app.css" rel="stylesheet">
+    <link href="/css/myStyle.css" rel="stylesheet">
     <link rel="stylesheet" href="/angular/node_modules/angular-material/angular-material.min.css">
     <link rel="stylesheet" href="/angular/node_modules/lf-ng-md-file-input/dist/lf-ng-md-file-input.min.css">
 
