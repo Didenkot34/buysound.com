@@ -3,11 +3,11 @@
 
     angular
         .module('app')
-        .controller('DialogEditGroupCtrl', DialogEditGroupController);
+        .controller('ModalGroupCtrl', ModalGroupController);
 
-    DialogEditGroupController.$inject = ['$scope', 'groupService', '$mdDialog', 'items', '$mdToast', '$timeout'];
+    ModalGroupController.$inject = ['$scope', 'groupService', '$mdDialog', 'items', '$mdToast', '$timeout'];
 
-    function DialogEditGroupController($scope, groupService, $mdDialog, items, $mdToast, $timeout) {
+    function ModalGroupController($scope, groupService, $mdDialog, items, $mdToast, $timeout) {
 
         $scope.group = items || {};
 
@@ -19,7 +19,13 @@
             { 'id' : 3, 'name': 'Низкий'  }
         ];
         $scope.group.rating = items ? items.rating : '3';
-        $scope.edit = function (group) {
+
+
+        $scope.edit        = edit;
+        $scope.createGroup = createGroup;
+        $scope.cancel      = cancel;
+
+        function edit(group) {
 
             if($scope.groupForm.$invalid){
                 return false
@@ -48,15 +54,12 @@
                         console.log('Error Update');
                     });
             }
-            // $mdDialog.hide(group);
         };
-        $scope.cancel = function (group) {
+        function cancel(group) {
             $mdDialog.hide(group);
         };
 
         function uploadImg(response) {
-
-
             var formData = new FormData();
             angular.forEach($scope.files,function(obj){
                 if(!obj.isRemote){
@@ -67,14 +70,13 @@
                 formData.append('imageName',response.data.imageName);
             groupService.uploadImg(formData)
                 .then(function successCallback(response) {
-                   // $scope.getAllGroups();
-
+                    console.log('Saved images');
                 }, function errorCallback() {
                     console.log('Error Upload');
                 });
         }
 
-        $scope.createGroup = function (groupData) {
+         function createGroup(groupData) {
 
             groupData.img = getImgOriginalExtension();
             if (!groupData.img) {

@@ -12,7 +12,7 @@
 
             // get all the groups
             getAll : function() {
-                // return $http.get('/api/groups');
+                
                 return $http({
                     method: 'GET',
                     url: '/api/groups',
@@ -40,6 +40,7 @@
                     data: groupData
                 });
             },
+            
             uploadImg : function (img) {
                 return $http({
                     method: 'POST',

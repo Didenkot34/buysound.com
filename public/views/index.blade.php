@@ -63,7 +63,7 @@
     <script src="/angular/components/directives/fileInputDirective.js"></script>
     <script src="/angular/components/directives/messagesSection.js"></script>
     <script src="/angular/components/directives/panelWidget.js"></script>
-    <script src="/angular/controllers/dialog/DialogEditGroupController.js"></script>
+    <script src="/angular/controllers/dialog/ModalGroupController.js"></script>
     <script src="/angular/controllers/groupAdminController.js"></script>
     <script src="/angular/controllers/MainController.js"></script>
   </body>
