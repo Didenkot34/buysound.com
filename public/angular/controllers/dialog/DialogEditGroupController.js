@@ -96,9 +96,10 @@
                     uploadImg(response);
                     $mdDialog.hide(groupData);
                 }, function errorCallback(response) {
+                   var message = _.get(response, 'data.name.0', 'Произошла системная ошибка, попробуйте позже');
                     $mdToast.show(
                         {
-                            template: '<md-toast class="md-toast">' + response.data.name[0] + '</md-toast>',
+                            template: '<md-toast class="md-toast">' + message + '</md-toast>',
                             hideDelay: 2000,
                             position: 'bottom right'
                         }
