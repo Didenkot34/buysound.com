@@ -5,7 +5,6 @@ namespace App\Http\Controllers\Group;
 use Illuminate\Http\Request;
 use App\Http\Controllers\AppController;
 use App\Models\Group;
-use DB;
 use App\Traits\ActionWithFileTraits;
 
 class GroupController extends AppController
@@ -24,7 +23,7 @@ class GroupController extends AppController
         $messages = [
             'unique' => 'Имя "' . $request->input('name') . '" уже существует.',
         ];
-       $this->validate($request, [
+        $this->validate($request, [
             'name' => 'unique:groups'
         ], $messages);
 
@@ -40,7 +39,7 @@ class GroupController extends AppController
             'active' => $request->input('active'),
         ];
         //dd($insert);
-         $id = Group::insertGetId($insert);
+        $id = Group::insertGetId($insert);
 
         return response()->json([
             'id' => $id,
@@ -52,7 +51,7 @@ class GroupController extends AppController
     {
         $id = $request->input('id');
         $imageName = $request->input('imageName');
-        $path = $this->createPath('groups', $id) ;
+        $path = $this->createPath('groups', $id);
 
         $this->uploadFile($request, $path, $imageName);
         //$request->file('file')->move($path, $imageName);
@@ -70,18 +69,19 @@ class GroupController extends AppController
 
         $group = Group::where('id', $id);
         $groupInfo = $group->first();
-        $imgPath = $this->createPath('groups',$id) . '/' . $groupInfo->img;
+        $imgPath = $this->createPath('groups', $id) . '/' . $groupInfo->img;
 
 
         $this->deleteFile($imgPath);
-        $this->deleteDirectory($this->createPath('groups',$id));
+        $this->deleteDirectory($this->createPath('groups', $id));
         $group->delete();
 
         return response()->json([
             'info' => $imgPath
         ]);
     }
-    public function updateGroups(Request $request,$id)
+
+    public function updateGroups(Request $request, $id)
     {
 
         $imgNew = $request->input('imgNew');
@@ -93,11 +93,11 @@ class GroupController extends AppController
             'slug' => str_slug($request->input('name')),
             'description' => $request->input('description'),
             'rating' => $request->input('rating'),
-            'active' => $request->input('active')== 'true' ? 1 : 0,
+            'active' => $request->input('active') == 'true' ? 1 : 0,
         ];
 
         if ($imgNew) {
-            $imgPath = $this->createPath('groups',$id) . '/' . $imgOld;
+            $imgPath = $this->createPath('groups', $id) . '/' . $imgOld;
             $imageName = str_random(15) . '.' . $request->input('imgNew');
             $update = array_add($update, 'img', $imageName);
 
