@@ -27,23 +27,13 @@ class GroupController extends AppController
             'name' => 'unique:groups'
         ], $messages);
 
-        $imageName = str_random(15)  . '.' . $request->input('img');
-
-
-        $insert = [
-            'name' => $request->input('name'),
-            'slug' => str_slug($request->input('name')),
-            'description' => $request->input('description'),
-            'img' => $imageName,
-            'rating' => $request->input('rating'),
-            'active' => $request->input('active'),
-        ];
+        $dataToSave = $this->getDataToSave($request);
         
-        $id = Group::insertGetId($insert);
+        $id = Group::insertGetId($dataToSave);
 
         return response()->json([
             'id' => $id,
-            'imageName' => $imageName
+            'imageName' => $dataToSave['img'] ?? false,
         ]);
     }
 
@@ -83,9 +73,28 @@ class GroupController extends AppController
 
         $imgNew = $request->input('img');
         $imgOld = Group::select('img')->where('id', '=', $id)->first()->img;
-        $imageName = false;
+        $dataToSave = $this->getDataToSave($request, $id);
 
-        $update = [
+        if ($imgNew) {
+            $imgPath = $this->createPath('groups', $id) . '/' . $imgOld;
+            $this->deleteFile($imgPath);
+        }
+
+        Group::where('id', $id)->update($dataToSave);
+
+        return response()->json([
+            'id' => $id,
+            'imageName' => $dataToSave['img'] ?? false,
+            'update' => $dataToSave,
+        ]);
+    }
+
+    private function getDataToSave(Request $request, $groupId = null)
+    {
+        $imgExtension = $request->input('img');
+        $imageName = str_random(15)  . '.' . $imgExtension;
+
+        $dataToSave = [
             'name' => $request->input('name'),
             'slug' => str_slug($request->input('name')),
             'description' => $request->input('description'),
@@ -93,20 +102,11 @@ class GroupController extends AppController
             'active' => $request->input('active') == 'true' ? 1 : 0,
         ];
 
-        if ($imgNew) {
-            $imgPath = $this->createPath('groups', $id) . '/' . $imgOld;
-            $imageName = str_random(15) . '.' . $imgNew;
-            $update = array_add($update, 'img', $imageName);
+        if ( ($groupId === null && $imgExtension) || ($groupId !== null && $imgExtension) ) {
 
-            $this->deleteFile($imgPath);
+            $dataToSave = array_add($dataToSave, 'img', $imageName);
         }
-
-        Group::where('id', $id)->update($update);
-
-        return response()->json([
-            'id' => $id,
-            'imageName' => $imageName,
-            'update' => $update,
-        ]);
+        
+        return $dataToSave;
     }
 }
