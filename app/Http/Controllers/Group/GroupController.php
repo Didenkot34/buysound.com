@@ -27,7 +27,7 @@ class GroupController extends AppController
             'name' => 'unique:groups'
         ], $messages);
 
-        $imageName = str_slug($request->input('name')) . '.' . $request->input('img');
+        $imageName = str_random(15)  . '.' . $request->input('img');
 
 
         $insert = [
@@ -38,7 +38,7 @@ class GroupController extends AppController
             'rating' => $request->input('rating'),
             'active' => $request->input('active'),
         ];
-        //dd($insert);
+        
         $id = Group::insertGetId($insert);
 
         return response()->json([
@@ -54,10 +54,7 @@ class GroupController extends AppController
         $path = $this->createPath('groups', $id);
 
         $this->uploadFile($request, $path, $imageName);
-        //$request->file('file')->move($path, $imageName);
 
-        //Storage::delete('public/name.jpg');
-        // \File::delete('img/name2.jpg');
         return response()->json([
             'id' => $id,
             'imageName' => $imageName
@@ -84,8 +81,8 @@ class GroupController extends AppController
     public function updateGroups(Request $request, $id)
     {
 
-        $imgNew = $request->input('imgNew');
-        $imgOld = $request->input('img');
+        $imgNew = $request->input('img');
+        $imgOld = Group::select('img')->where('id', '=', $id)->first()->img;
         $imageName = false;
 
         $update = [
@@ -98,7 +95,7 @@ class GroupController extends AppController
 
         if ($imgNew) {
             $imgPath = $this->createPath('groups', $id) . '/' . $imgOld;
-            $imageName = str_random(15) . '.' . $request->input('imgNew');
+            $imageName = str_random(15) . '.' . $imgNew;
             $update = array_add($update, 'img', $imageName);
 
             $this->deleteFile($imgPath);

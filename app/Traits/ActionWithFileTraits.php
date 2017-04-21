@@ -21,6 +21,6 @@ trait ActionWithFileTraits
 
     public function createPath($type, $id)
     {
-        return 'img/' . $type . '/' . $id;
+        return 'upload/img/' . $type . '/' . $id;
     }
 }

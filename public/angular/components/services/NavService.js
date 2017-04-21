@@ -14,11 +14,11 @@
         icon: 'dashboard',
         sref: '.dashboard'
       },
-      // {
-      //   name: 'Profile',
-      //   icon: 'person',
-      //   sref: '.profile'
-      // },
+      {
+        name: 'Test',
+        icon: 'person',
+        sref: 'test.groups'
+      },
       {
         name: 'Groups',
         icon: 'view_module',

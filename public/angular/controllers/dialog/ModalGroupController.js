@@ -39,9 +39,9 @@
                 if (_.has($scope, 'files.0')) {
 
                     var match = $scope.files[0].lfFileName.match(/[a-zA-Z]{3}$/);
-                    groupData.imgNew = match[0];
+                    groupData.img = match[0];
                 } else {
-                    groupData.imgNew = 0;
+                    groupData.img = 0;
                 }
 
                 groupService.update(groupData, groupData.id)

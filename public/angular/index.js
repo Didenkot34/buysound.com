@@ -36,7 +36,22 @@ angular.module('angularMaterialAdmin', ['ngAnimate', 'ui.router', 'ui.bootstrap'
         data: {
           title: 'Table'
         }
-      });
+      }) 
+        .state('test', {
+        url: '',
+        templateUrl: '/views/app/test/index.html',
+        //controller: 'AdminController',
+        //controllerAs: 'vm',
+        abstract: true
+    })
+        .state('test.groups', {
+            url: '/test-groups',
+            templateUrl: '/views/app/test/groups/groups.html',
+            //controller: 'AdminGroupController',
+            data: {
+                title: 'Admin Groups'
+            }
+        });
 
     $urlRouterProvider.otherwise('/dashboard');
 

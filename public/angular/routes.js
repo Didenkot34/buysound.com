@@ -17,7 +17,7 @@
             .state('home', {
                 url: '/',
                 templateUrl: '/views/home/home.blade.php',
-                 controller: 'groupAdminCtrl'
+                controller: 'groupAdminCtrl'
             });
         $stateProvider
             .state('about', {
@@ -25,11 +25,11 @@
                 templateUrl: 'views/about/about.blade.php',
                 controller: function ($scope, $rootScope) {
                     $scope.title = 'About2';
-                   // $rootScope.title2 = 'About';
+                    // $rootScope.title2 = 'About';
                     $scope.addedToFavorite = false;
                     $scope.addToFavorite = function () {
                         if ($scope.addedToFavorite) {
-                            $scope.addedToFavorite = false; 
+                            $scope.addedToFavorite = false;
                         } else {
                             $scope.addedToFavorite = true;
                         }
