@@ -7,10 +7,10 @@ use File;
 
 class AppController extends Controller
 {
-    
-    public function uploadFile(Request $request, $path, $fileName)
+
+    public function uploadFile(Request $request, $path, $fileName, $type = 'file')
     {
-        $request->file('file')->move($path, $fileName);
+        $request->file($type)->move($path, $fileName);
     }
 
     public function deleteFile($fileName)

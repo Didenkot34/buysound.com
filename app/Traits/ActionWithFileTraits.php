@@ -23,4 +23,9 @@ trait ActionWithFileTraits
     {
         return 'upload/img/' . $type . '/' . $id;
     }
+
+    public function createAudioPath($id)
+    {
+        return 'upload/audio/' . $id;
+    }
 }
