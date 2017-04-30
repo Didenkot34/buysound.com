@@ -36,17 +36,13 @@
             if (items === false) {
                 $scope.createSong(songData);
             } else {
-                if (_.has($scope, 'files.0')) {
-
-                    var match = $scope.files[0].lfFileName.match(/[a-zA-Z]{3}$/);
-                    songData.img = match[0];
-                } else {
-                    songData.img = 0;
-                }
+                
+                songData.img = getFileOriginalExtension('img');
+                songData.audio = getFileOriginalExtension('audio');
 
                 songsService.update(songData, songData.id)
                     .then(function successCallback(response) {
-                        if (response.data.imageName) {
+                        if (response.data.imgName || response.data.audioName) {
                             uploadImg(response);
                         }
                         showMessageInToaster('Данные успешно измененны', 'success');
@@ -120,8 +116,7 @@
                 var match = ($scope[type][0]).lfFileName.match(/[a-zA-Z0-9]{3}$/);
                 return match[0];
             } else {
-
-                return false;
+                return 0;
             }
         }
 

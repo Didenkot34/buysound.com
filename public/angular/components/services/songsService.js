@@ -26,7 +26,7 @@
 
             getOne: function (id) {
 
-                return $http.get('/api/groups/' + id);
+                return $http.get('/songs/' + id);
             },
 
             // save a groups (pass in comment data)
@@ -58,7 +58,7 @@
             update: function (groupData, id) {
                 return $http({
                     method: 'PUT',
-                    url: '/api/groups/' + id,
+                    url: '/songs/' + id,
                     headers: {'Content-Type': 'application/x-www-form-urlencoded'},
                     data: $.param(groupData)
                 });

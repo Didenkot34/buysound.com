@@ -18,7 +18,7 @@
         $scope.getAllSongs = getAllSongs;
         $scope.addSong = addSong;
         $scope.deleteSong = deleteSong;
-        // $scope.editSong    = editSong;
+        $scope.editSong = editSong;
 
 
         $scope.getAllSongs();
@@ -79,26 +79,25 @@
             });
 
         };
-        //
-        //     function editGroup(ev, group) {
-        //
-        //         $mdDialog.show({
-        //             controller: 'ModalGroupCtrl',
-        //             templateUrl: '/views/dialogEdit.blade.php',
-        //             parent: angular.element(document.body),
-        //             targetEvent: ev,
-        //             locals: {
-        //                 items: group
-        //             },
-        //             clickOutsideToClose: true,
-        //             fullscreen: true
-        //         }).then(function (answer) {
-        //             $scope.getAllGroups();
-        //             //groupService.update()
-        //         }, function () {
-        //         });
-        //     };
-        //
+
+        function editSong(ev, song) {
+
+            $mdDialog.show({
+                controller: 'ModalSongCtrl',
+                templateUrl: '/views/app/admin/songs/modal/form.html',
+                parent: angular.element(document.body),
+                targetEvent: ev,
+                locals: {
+                    items: song
+                },
+                clickOutsideToClose: true,
+                fullscreen: true
+            }).then(function (answer) {
+                $scope.getAllSongs();
+            }, function () {
+            });
+        };
+
 
     }
 })();

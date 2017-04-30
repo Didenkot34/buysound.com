@@ -10,7 +10,10 @@ class AppController extends Controller
 
     public function uploadFile(Request $request, $path, $fileName, $type = 'file')
     {
-        $request->file($type)->move($path, $fileName);
+        
+        if ($path && $fileName) {
+            $request->file($type)->move($path, $fileName);
+        }
     }
 
     public function deleteFile($fileName)

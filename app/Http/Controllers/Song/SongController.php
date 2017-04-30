@@ -90,7 +90,30 @@ class SongController extends AppController
      */
     public function update(Request $request, $id)
     {
-        //
+        $imgExtension = $request->input('img');
+        $audioExtension = $request->input('audio');
+
+        $oldImgName = Song::select('img')->where('id', '=', $id)->first()->img;
+        $oldAudioName = Song::select('audio')->where('id', '=', $id)->first()->audio;
+
+        $dataToSave = $this->getDataToSave($request, $id);
+
+        if ($imgExtension) {
+            $pathToImg = $this->createPath('songs', $id) . '/' . $oldImgName;
+            $this->deleteFile($pathToImg);
+        }
+        if ($audioExtension) {
+            $pathToAudio = $this->createAudioPath($id) . '/' . $oldAudioName;
+            $this->deleteFile($pathToAudio);
+        }
+
+        Song::where('id', $id)->update($dataToSave);
+
+        return response()->json([
+            'id' => $id,
+            'imgName' => $dataToSave['img'] ?? 0,
+            'audioName' => $dataToSave['audio'] ?? 0,
+        ]);
     }
 
     /**
@@ -103,31 +126,33 @@ class SongController extends AppController
     {
         $song = Song::where('id', $id);
         $songInfo = $song->first();
-        $imgPath = $this->createPath('songs', $id) . '/' . $songInfo->img;
-        $audioPath = $this->createAudioPath($id) . '/' . $songInfo->img;
+        $pathToImg = $this->createPath('songs', $id) . '/' . $songInfo->img;
+        $pathToAudio = $this->createAudioPath($id) . '/' . $songInfo->img;
 
 
-        $this->deleteFile($imgPath);
-        $this->deleteFile($audioPath);
+        $this->deleteFile($pathToImg);
+        $this->deleteFile($pathToAudio);
         $this->deleteDirectory($this->createPath('songs', $id));
         $this->deleteDirectory($this->createAudioPath($id));
         $song->delete();
 
         return response()->json([
-            'info' => $imgPath
+            'info' => $pathToImg
         ]);
     }
 
     public function uploadFiles(Request $request)
     {
         $id = $request->input('id');
+        
         $imgName = $request->input('imgName');
         $audioName = $request->input('audioName');
-        $pathImg = $this->createPath('songs', $id);
-        $pathAudio = $this->createAudioPath($id);
 
-        $this->uploadFile($request, $pathImg, $imgName, 'img');
-        $this->uploadFile($request, $pathAudio, $audioName, 'audio');
+        $pathToImg = $this->createPath('songs', $id);
+        $pathToAudio = $this->createAudioPath($id);
+
+        $this->uploadFile($request, $pathToImg, $imgName, 'img');
+        $this->uploadFile($request, $pathToAudio, $audioName, 'audio');
 
         return response()->json([
             'id' => $id,
@@ -140,8 +165,8 @@ class SongController extends AppController
     {
         $imgExtension = $request->input('img');
         $audioExtension = $request->input('audio');
-        $imgName = str_random(15) . '.' . $imgExtension;
-        $audioName = str_random(15) . '.' . $audioExtension;
+        $imgName = $imgExtension ? str_random(15) . '.' . $imgExtension : false;
+        $audioName = $audioExtension ? str_random(15) . '.' . $audioExtension : false;
 
         $dataToSave = [
             'name' => $request->input('name'),
