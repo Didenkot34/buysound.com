@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers\Group;
 
+use App\Pattern\Strategy\FileActions\GroupFile;
+use App\Pattern\Strategy\FileActions\ImgFileActionsStrategy;
 use Illuminate\Http\Request;
 use App\Http\Controllers\AppController;
 use App\Models\Group;
@@ -33,66 +35,58 @@ class GroupController extends AppController
 
         return response()->json([
             'id' => $id,
-            'imageName' => $dataToSave['img'] ?? false,
+            'imgName' => $dataToSave['img'] ?? false,
         ]);
     }
 
     public function uploadImg(Request $request)
     {
         $id = $request->input('id');
-        $imageName = $request->input('imageName');
-        $path = $this->createPath('groups', $id);
-
-        $this->uploadFile($request, $path, $imageName);
+        $imgName = $request->input('imgName');
+        $groupFile = new GroupFile('uploads/groups/img/' . $id, new ImgFileActionsStrategy(), $request);
+        $groupFile->upload();
 
         return response()->json([
             'id' => $id,
-            'imageName' => $imageName
+            'imgName' => $imgName
         ]);
     }
 
     public function deleteGroups($id)
     {
-
+        
         $group = Group::where('id', $id);
-        $groupInfo = $group->first();
-        $imgPath = $this->createPath('groups', $id) . '/' . $groupInfo->img;
-
-
-        $this->deleteFile($imgPath);
-        $this->deleteDirectory($this->createPath('groups', $id));
+        $groupFile = new GroupFile('uploads/groups/img/' . $id, new ImgFileActionsStrategy());
+        $groupFile->delete();
         $group->delete();
 
         return response()->json([
-            'info' => $imgPath
+            'success' => true
         ]);
     }
 
     public function updateGroups(Request $request, $id)
     {
 
-        $imgNew = $request->input('img');
-        $imgOld = Group::select('img')->where('id', '=', $id)->first()->img;
+        $imgExtension = $request->input('img');
         $dataToSave = $this->getDataToSave($request, $id);
-
-        if ($imgNew) {
-            $imgPath = $this->createPath('groups', $id) . '/' . $imgOld;
-            $this->deleteFile($imgPath);
+        if ($imgExtension) {
+            $groupFile = new GroupFile('uploads/groups/img/' . $id, new ImgFileActionsStrategy());
+            $groupFile->delete();
         }
 
         Group::where('id', $id)->update($dataToSave);
 
         return response()->json([
             'id' => $id,
-            'imageName' => $dataToSave['img'] ?? false,
-            'update' => $dataToSave,
+            'imgName' => $dataToSave['img'] ?? false,
         ]);
     }
 
     private function getDataToSave(Request $request, $groupId = null)
     {
         $imgExtension = $request->input('img');
-        $imageName = str_random(15)  . '.' . $imgExtension;
+        $imgName = str_random(15)  . '.' . $imgExtension;
 
         $dataToSave = [
             'name' => $request->input('name'),
@@ -104,7 +98,7 @@ class GroupController extends AppController
 
         if ( ($groupId === null && $imgExtension) || ($groupId !== null && $imgExtension) ) {
 
-            $dataToSave = array_add($dataToSave, 'img', $imageName);
+            $dataToSave = array_add($dataToSave, 'img', $imgName);
         }
         
         return $dataToSave;

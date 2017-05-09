@@ -18,7 +18,7 @@
         function getAllGroups() {
             groupService.getAll()
                 .then(function successCallback(response) {
-                    $scope.groups = 'Noting';
+                    $scope.groups = null;
                     if (_.get(response, 'data.groups.length', false)) {
                         $scope.groups = response.data.groups;
                     }

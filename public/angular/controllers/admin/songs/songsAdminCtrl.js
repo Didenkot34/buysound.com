@@ -24,7 +24,7 @@
         $scope.getAllSongs();
 
         function getAudioUrl(song) {
-            var url = '/upload/audio/' + song.id + '/' + song.audio;
+            var url = '/uploads/songs/audio/' + song.id + '/' + song.audio;
             return $sce.trustAsResourceUrl(url);
         };
 

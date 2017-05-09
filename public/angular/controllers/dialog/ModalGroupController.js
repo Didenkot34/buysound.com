@@ -36,9 +36,9 @@
             if (items === false) {
                 $scope.createGroup(groupData);
             } else {
-                if (_.has($scope, 'files.0')) {
+                if (_.has($scope, 'img.0')) {
 
-                    var match = $scope.files[0].lfFileName.match(/[a-zA-Z]{3}$/);
+                    var match = $scope.img[0].lfFileName.match(/[a-zA-Z]{3}$/);
                     groupData.img = match[0];
                 } else {
                     groupData.img = 0;
@@ -46,7 +46,7 @@
 
                 groupService.update(groupData, groupData.id)
                     .then(function successCallback(response) {
-                        if (response.data.imageName) {
+                        if (response.data.imgName) {
                             uploadImg(response);
                         }
                         showMessageInToaster('Данные успешно измененны', 'success');
@@ -62,13 +62,13 @@
 
         function uploadImg(response) {
             var formData = new FormData();
-            angular.forEach($scope.files,function(obj){
+            angular.forEach($scope.img,function(obj){
                 if(!obj.isRemote){
-                    formData.append('file', obj.lfFile);
+                    formData.append('img', obj.lfFile);
                 }
             });
                 formData.append('id',response.data.id);
-                formData.append('imageName',response.data.imageName);
+                formData.append('imgName',response.data.imgName);
             groupService.uploadImg(formData)
                 .then(function successCallback(response) {
                     console.log('Saved images');
@@ -103,9 +103,9 @@
 
         function getImgOriginalExtension() {
 
-            if (_.has($scope,'files.0')) {
+            if (_.has($scope,'img.0')) {
 
-                var match = $scope.files[0].lfFileName.match(/[a-zA-Z]{3}$/);
+                var match = $scope.img[0].lfFileName.match(/[a-zA-Z]{3}$/);
 
                 return match[0];
             } else {

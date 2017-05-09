@@ -48,7 +48,7 @@
                         <div ng-message="md-maxlength">The description must be less than 30 characters long.</div>
                     </div>
                 </md-input-container>
-                <lf-ng-md-file-input lf-files="files" lf-browse-label="Выбрать файл" lf-remove-label="Удалить"  preview ></lf-ng-md-file-input>
+                <lf-ng-md-file-input lf-files="img" lf-browse-label="Выбрать файл" lf-remove-label="Удалить"  preview ></lf-ng-md-file-input>
             </div>
         </md-dialog-content>
 

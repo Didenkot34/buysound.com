@@ -4,6 +4,9 @@ namespace App\Http\Controllers\Song;
 
 use App\Http\Controllers\AppController;
 use App\Models\Song;
+use App\Pattern\Strategy\FileActions\AudioFileActionsStrategy;
+use App\Pattern\Strategy\FileActions\ImgFileActionsStrategy;
+use App\Pattern\Strategy\FileActions\SongFile;
 use App\Traits\ActionWithFileTraits;
 use Illuminate\Http\Request;
 
@@ -41,12 +44,6 @@ class SongController extends AppController
      */
     public function store(Request $request)
     {
-//        $messages = [
-//            'unique' => 'Имя "' . $request->input('name') . '" уже существует.',
-//        ];
-//        $this->validate($request, [
-//            'name' => 'unique:groups'
-//        ], $messages);
 
         $dataToSave = $this->getDataToSave($request);
 
@@ -92,19 +89,15 @@ class SongController extends AppController
     {
         $imgExtension = $request->input('img');
         $audioExtension = $request->input('audio');
-
-        $oldImgName = Song::select('img')->where('id', '=', $id)->first()->img;
-        $oldAudioName = Song::select('audio')->where('id', '=', $id)->first()->audio;
-
+        $pathToImg = 'uploads/songs/img/' . $id;
+        $pathToAudio = 'uploads/songs/audio/' . $id;
         $dataToSave = $this->getDataToSave($request, $id);
 
         if ($imgExtension) {
-            $pathToImg = $this->createPath('songs', $id) . '/' . $oldImgName;
-            $this->deleteFile($pathToImg);
+            $this->deleteImg($pathToImg);
         }
         if ($audioExtension) {
-            $pathToAudio = $this->createAudioPath($id) . '/' . $oldAudioName;
-            $this->deleteFile($pathToAudio);
+            $this->deleteAudio($pathToAudio);
         }
 
         Song::where('id', $id)->update($dataToSave);
@@ -125,39 +118,31 @@ class SongController extends AppController
     public function destroy($id)
     {
         $song = Song::where('id', $id);
-        $songInfo = $song->first();
-        $pathToImg = $this->createPath('songs', $id) . '/' . $songInfo->img;
-        $pathToAudio = $this->createAudioPath($id) . '/' . $songInfo->img;
 
+        $pathToImg = 'uploads/songs/img/' . $id;
+        $pathToAudio = 'uploads/songs/audio/' . $id;
 
-        $this->deleteFile($pathToImg);
-        $this->deleteFile($pathToAudio);
-        $this->deleteDirectory($this->createPath('songs', $id));
-        $this->deleteDirectory($this->createAudioPath($id));
+        $this->deleteImg($pathToImg);
+        $this->deleteAudio($pathToAudio);
+
         $song->delete();
 
         return response()->json([
-            'info' => $pathToImg
+            'success' => true
         ]);
     }
 
     public function uploadFiles(Request $request)
     {
         $id = $request->input('id');
-        
-        $imgName = $request->input('imgName');
-        $audioName = $request->input('audioName');
+        $pathToImg = 'uploads/songs/img/' . $id;
+        $pathToAudio = 'uploads/songs/audio/' . $id;
 
-        $pathToImg = $this->createPath('songs', $id);
-        $pathToAudio = $this->createAudioPath($id);
-
-        $this->uploadFile($request, $pathToImg, $imgName, 'img');
-        $this->uploadFile($request, $pathToAudio, $audioName, 'audio');
+        $this->uploadImg($pathToImg, $request);
+        $this->uploadAudio($pathToAudio, $request);
 
         return response()->json([
-            'id' => $id,
-            'imgName' => $imgName,
-            'audioName' => $audioName,
+            'id' => $id
         ]);
     }
 
@@ -188,5 +173,28 @@ class SongController extends AppController
         }
 
         return $dataToSave;
+    }
+
+    private function uploadImg($path, Request $request)
+    {
+        $songImg = new SongFile($path, new ImgFileActionsStrategy(), $request);
+        $songImg->upload();
+    }
+
+    private function uploadAudio($path, Request $request)
+    {
+        $songAudio = new SongFile($path, new AudioFileActionsStrategy(), $request);
+        $songAudio->upload();
+    }
+
+    private function deleteImg($path)
+    {
+        $songImg = new SongFile($path, new ImgFileActionsStrategy());
+        $songImg->delete();
+    }
+    private function deleteAudio($path)
+    {
+        $songImg = new SongFile($path, new AudioFileActionsStrategy());
+        $songImg->delete();
     }
 }
