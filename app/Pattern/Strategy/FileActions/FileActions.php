@@ -9,6 +9,8 @@ abstract class FileActions {
     private $path;
     private $fileActionsStrategy;
     private $request;
+    protected $fileInputName;
+    protected $inputName;
 
     public function __construct($path, FileActionsStrategy $strategy, Request $request = null)
     {
@@ -44,5 +46,15 @@ abstract class FileActions {
     public function getFileNameToSave($inputName)
     {
         return $this->request->input($inputName);
+    }
+
+    public function getFileInputName()
+    {
+        return $this->fileInputName;
+    }
+
+    public function getInputName()
+    {
+        return $this->inputName;
     }
 }

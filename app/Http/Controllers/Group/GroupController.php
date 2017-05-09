@@ -2,17 +2,14 @@
 
 namespace App\Http\Controllers\Group;
 
-use App\Pattern\Strategy\FileActions\GroupFile;
-use App\Pattern\Strategy\FileActions\ImgFileActionsStrategy;
+use App\Http\Controllers\Controller;
+use App\Pattern\Strategy\FileActions\FileStrategy;
+use App\Pattern\Strategy\FileActions\ImgFile;
 use Illuminate\Http\Request;
-use App\Http\Controllers\AppController;
 use App\Models\Group;
-use App\Traits\ActionWithFileTraits;
 
-class GroupController extends AppController
+class GroupController extends Controller
 {
-    use ActionWithFileTraits;
-
     public function getAll()
     {
         return response()->json([
@@ -43,8 +40,9 @@ class GroupController extends AppController
     {
         $id = $request->input('id');
         $imgName = $request->input('imgName');
-        $groupFile = new GroupFile('uploads/groups/img/' . $id, new ImgFileActionsStrategy(), $request);
-        $groupFile->upload();
+
+        $pathToImg = 'uploads/groups/img/' . $id;
+        $this->uploadImage($pathToImg, $request);
 
         return response()->json([
             'id' => $id,
@@ -56,8 +54,8 @@ class GroupController extends AppController
     {
         
         $group = Group::where('id', $id);
-        $groupFile = new GroupFile('uploads/groups/img/' . $id, new ImgFileActionsStrategy());
-        $groupFile->delete();
+        $pathToImg = 'uploads/groups/img/' . $id;
+        $this->deleteImg($pathToImg);
         $group->delete();
 
         return response()->json([
@@ -71,8 +69,8 @@ class GroupController extends AppController
         $imgExtension = $request->input('img');
         $dataToSave = $this->getDataToSave($request, $id);
         if ($imgExtension) {
-            $groupFile = new GroupFile('uploads/groups/img/' . $id, new ImgFileActionsStrategy());
-            $groupFile->delete();
+            $pathToImg = 'uploads/groups/img/' . $id;
+            $this->deleteImg($pathToImg);
         }
 
         Group::where('id', $id)->update($dataToSave);
@@ -102,5 +100,17 @@ class GroupController extends AppController
         }
         
         return $dataToSave;
+    }
+
+    public function uploadImage($path, Request $request)
+    {
+        $img = new ImgFile($path, new FileStrategy(), $request);
+        $img->upload();
+    }
+
+    public function deleteImg($path)
+    {
+        $img = new ImgFile($path, new FileStrategy());
+        $img->delete();
     }
 }

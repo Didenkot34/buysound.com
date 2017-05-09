@@ -2,28 +2,27 @@
 /**
  * Created by PhpStorm.
  * User: didenko
- * Date: 05.05.17
- * Time: 23:45
+ * Date: 09.05.17
+ * Time: 17:19
  */
 
 namespace App\Pattern\Strategy\FileActions;
-
 use File;
 
-class ImgFileActionsStrategy extends FileActionsStrategy
+class FileStrategy extends  FileActionsStrategy
 {
-
     public function upload(FileActions $fileActions)
     {
         $request = $fileActions->getRequest();
-        $fileInputName = 'img';
-        $fileNameToSave = $fileActions->getFileNameToSave('imgName');
+        $fileInputName = $fileActions->getFileInputName();
+        $inputName = $fileActions->getInputName();
+        $fileNameToSave = $fileActions->getFileNameToSave($inputName);
         $path = $fileActions->getPath();
         
         if ($fileNameToSave) {
-            $request->file($fileInputName)->storeAs($path, $fileNameToSave, 'public'); 
+            $request->file($fileInputName)->storeAs($path, $fileNameToSave, 'public');
         }
-        
+
 
     }
 

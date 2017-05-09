@@ -2,17 +2,15 @@
 
 namespace App\Http\Controllers\Song;
 
-use App\Http\Controllers\AppController;
+use App\Http\Controllers\Controller;
 use App\Models\Song;
-use App\Pattern\Strategy\FileActions\AudioFileActionsStrategy;
-use App\Pattern\Strategy\FileActions\ImgFileActionsStrategy;
-use App\Pattern\Strategy\FileActions\SongFile;
-use App\Traits\ActionWithFileTraits;
+use App\Pattern\Strategy\FileActions\AudioFile;
+use App\Pattern\Strategy\FileActions\FileStrategy;
+use App\Pattern\Strategy\FileActions\ImgFile;
 use Illuminate\Http\Request;
 
-class SongController extends AppController
+class SongController extends Controller
 {
-    use ActionWithFileTraits;
 
     /**
      * Display a listing of the resource.
@@ -177,24 +175,24 @@ class SongController extends AppController
 
     private function uploadImg($path, Request $request)
     {
-        $songImg = new SongFile($path, new ImgFileActionsStrategy(), $request);
+        $songImg = new ImgFile($path, new FileStrategy(), $request);
         $songImg->upload();
     }
 
     private function uploadAudio($path, Request $request)
     {
-        $songAudio = new SongFile($path, new AudioFileActionsStrategy(), $request);
+        $songAudio = new AudioFile($path, new FileStrategy(), $request);
         $songAudio->upload();
     }
 
     private function deleteImg($path)
     {
-        $songImg = new SongFile($path, new ImgFileActionsStrategy());
+        $songImg = new ImgFile($path, new FileStrategy());
         $songImg->delete();
     }
     private function deleteAudio($path)
     {
-        $songImg = new SongFile($path, new AudioFileActionsStrategy());
+        $songImg = new AudioFile($path, new FileStrategy());
         $songImg->delete();
     }
 }
