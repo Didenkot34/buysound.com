@@ -7,23 +7,21 @@
  */
 
 namespace App\Pattern\Strategy\FileActions;
+
 use File;
 
-class FileStrategy extends  FileActionsStrategy
+class FileStrategy extends FileActionsStrategy
 {
     public function upload(FileActions $fileActions)
     {
-        $request = $fileActions->getRequest();
-        $fileInputName = $fileActions->getFileInputName();
-        $inputName = $fileActions->getInputName();
-        $fileNameToSave = $fileActions->getFileNameToSave($inputName);
-        $path = $fileActions->getPath();
-        
+        $fileNameToSave = $fileActions->getFileNameToSave();
+
         if ($fileNameToSave) {
-            $request->file($fileInputName)->storeAs($path, $fileNameToSave, 'public');
+            $fileActions->getRequest()
+                ->file($fileActions->getFileInputName())
+                ->storeAs($fileActions->getPath(), $fileNameToSave, 'public');
         }
-
-
+        
     }
 
     public function delete(FileActions $fileActions)

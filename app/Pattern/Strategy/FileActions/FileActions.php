@@ -4,8 +4,9 @@ namespace App\Pattern\Strategy\FileActions;
 
 use Illuminate\Http\Request;
 
-abstract class FileActions {
-    
+abstract class FileActions
+{
+
     private $path;
     private $fileActionsStrategy;
     private $request;
@@ -19,41 +20,65 @@ abstract class FileActions {
         $this->request = $request;
     }
 
+    /**
+     * Upload file by FileActionsStrategy
+     */
     public function upload()
     {
         $this->fileActionsStrategy->upload($this);
     }
 
+    /**
+     * Delete file by FileActionsStrategy
+     */
     public function delete()
     {
         $this->fileActionsStrategy->delete($this);
     }
 
-    public function getPath()
+    /**
+     * Get the path to upload file
+     * @return string
+     */
+    public function getPath() : string
     {
         return $this->path;
     }
 
-    public function getRequest()
+    /**
+     * @return Request
+     */
+    public function getRequest() : Request
     {
         return $this->request;
     }
 
     /**
-     * @param $inputName = 'imgName, audioName'
-     * @return array|string
+     *  <input name = "inputName" value = "fileNameToSave" type = "text">
+     * @return string
      */
-    public function getFileNameToSave($inputName)
+    public function getFileNameToSave() : string
     {
-        return $this->request->input($inputName);
+        return $this->request->input($this->inputName);
     }
 
-    public function getFileInputName()
+
+    /**
+     * fileInputName = img or audio, etc...
+     * <lf-ng-md-file-input lf-files = "fileInputName" >
+     * @return string
+     */
+    public function getFileInputName() : string
     {
         return $this->fileInputName;
     }
 
-    public function getInputName()
+    /**
+     * name = imgName or audioName
+     * <input name = "inputName" type = "text">
+     * @return string
+     */
+    public function getInputName() : string
     {
         return $this->inputName;
     }
