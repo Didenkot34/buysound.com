@@ -12,12 +12,12 @@
             {
                 name: 'Dashboard',
                 icon: 'dashboard',
-                sref: '.dashboard'
+                sref: 'admin.dashboard'
             },
             {
                 name: 'Songs',
                 icon: 'dashboard',
-                sref: '.songs'
+                sref: 'admin.songs'
             },
             {
                 name: 'Test',
@@ -27,7 +27,12 @@
             {
                 name: 'Groups',
                 icon: 'view_module',
-                sref: '.table'
+                sref: 'admin.table'
+            },
+            {
+                name: 'Home',
+                icon: 'view_module',
+                sref: 'home.home'
             }
         ];
 

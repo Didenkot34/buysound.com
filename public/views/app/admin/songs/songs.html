@@ -11,7 +11,12 @@
                 Name
             </th>
             <th>Description</th>
-            <th>Audio</th>
+            <th>
+                <md-input-container>
+                <label>Audio</label>
+                <input type="text" ng-model="search.$">
+            </md-input-container>
+            </th>
             <th>Action
                 <md-button ng-click="addSong($event)" aria-label="Edit" class="md-fab md-mini md-raised">
                     <md-tooltip md-direction="down">
@@ -23,7 +28,7 @@
         </tr>
         </thead>
         <tbody>
-        <tr ng-if="songs" ng-repeat="song in songs track by $index" ng-dblclick="editSong($event,song)">
+        <tr ng-if="songs" ng-repeat="song in songs|filter:search:strict" ng-dblclick="editSong($event,song)">
             <td data-title="ID">{{$index + 1}}</td>
             <td data-title="Issue">
                 <img width="80" ng-src="/uploads/songs/img/{{song.id}}/{{song.img}}" class="img img-responsive img-thumbnail" alt="song.name">

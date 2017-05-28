@@ -5,21 +5,21 @@ angular.module('angularMaterialAdmin', ['ngAnimate', 'ui.router', 'ui.bootstrap'
     .config(function ($stateProvider, $urlRouterProvider, $mdThemingProvider,
                       $mdIconProvider) {
         $stateProvider
-            .state('home', {
+            .state('admin', {
                 url: '',
                 templateUrl: '/views/app/main.html',
                 controller: 'MainController',
                 controllerAs: 'vm',
                 abstract: true
             })
-            .state('home.dashboard', {
+            .state('admin.dashboard', {
                 url: '/dashboard',
                 templateUrl: '/views/app/dashboard.html',
                 data: {
                     title: 'Dashboard'
                 }
             })
-            .state('home.profile', {
+            .state('admin.profile', {
                 url: '/profile',
                 templateUrl: '/views/app/profile.html',
                 controller: 'ProfileController',
@@ -28,7 +28,7 @@ angular.module('angularMaterialAdmin', ['ngAnimate', 'ui.router', 'ui.bootstrap'
                     title: 'Profile'
                 }
             })
-            .state('home.table', {
+            .state('admin.table', {
                 url: '/table',
                 controller: 'groupAdminCtrl',
                 controllerAs: 'vm',
@@ -37,7 +37,7 @@ angular.module('angularMaterialAdmin', ['ngAnimate', 'ui.router', 'ui.bootstrap'
                     title: 'Table'
                 }
             })
-            .state('home.songs', {
+            .state('admin.songs', {
                 url: '/songs',
                 controller: 'songsAdminCtrl',
                 // controllerAs: 'vm',
@@ -60,9 +60,22 @@ angular.module('angularMaterialAdmin', ['ngAnimate', 'ui.router', 'ui.bootstrap'
                 data: {
                     title: 'Admin Groups'
                 }
+            })
+            .state('home', {
+                url: '',
+                templateUrl: '/views/app/home/index.html',
+                abstract: true
+            })
+            .state('home.home', {
+                url: '/home',
+                templateUrl: '/views/app/home/home.html',
+                controller: 'HomeCtrl',
+                data: {
+                    title: 'Home'
+                }
             });
 
-        $urlRouterProvider.otherwise('/dashboard');
+        $urlRouterProvider.otherwise('/home');
 
         $mdThemingProvider
             .theme('default')

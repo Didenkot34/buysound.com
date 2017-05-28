@@ -15,6 +15,7 @@
     <link href="/css/myStyle.css" rel="stylesheet">
     <link rel="stylesheet" href="/angular/node_modules/angular-material/angular-material.min.css">
     <link rel="stylesheet" href="/angular/node_modules/lf-ng-md-file-input/dist/lf-ng-md-file-input.min.css">
+    <!-- Compiled and minified CSS materialize -->
 
     <!-- Scripts -->
     <script>
@@ -70,5 +71,6 @@
     <script src="/angular/controllers/groupAdminController.js"></script>
     <script src="/angular/controllers/MainController.js"></script>
     <script src="/angular/controllers/admin/songs/songsAdminCtrl.js"></script>
+    <script src="/angular/controllers/home/HomeCtrl.js"></script>
   </body>
 </html>
