@@ -5,9 +5,9 @@
         .module('app')
         .controller('ModalSongCtrl', ModalSongCtrl);
 
-    ModalSongCtrl.$inject = ['$scope', 'songsService', '$mdDialog', 'items', '$mdToast', '$timeout'];
+    ModalSongCtrl.$inject = ['$scope', 'songsService', '$mdDialog', 'items','groups', '$mdToast', '$timeout'];
 
-    function ModalSongCtrl($scope, songsService, $mdDialog, items, $mdToast, $timeout) {
+    function ModalSongCtrl($scope, songsService, $mdDialog, items, groups, $mdToast, $timeout) {
 
         $scope.song = items || {};
 
@@ -19,8 +19,8 @@
             {'id': 3, 'name': 'Низкий'}
         ];
         $scope.song.rating = items ? items.rating : '3';
-
-
+        
+        $scope.groups = angular.copy(groups);
         $scope.edit = edit;
         $scope.createSong = createSong;
         $scope.cancel = cancel;

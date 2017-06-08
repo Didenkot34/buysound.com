@@ -150,7 +150,7 @@ class SongController extends Controller
         $audioExtension = $request->input('audio');
         $imgName = $imgExtension ? str_random(15) . '.' . $imgExtension : false;
         $audioName = $audioExtension ? str_random(15) . '.' . $audioExtension : false;
-
+        $groupId = $request->input('group_id') ?? null;
         $dataToSave = [
             'name' => $request->input('name'),
             'slug' => str_slug($request->input('name')),
@@ -159,6 +159,7 @@ class SongController extends Controller
             'active' => $request->input('active') == 'true' ? 1 : 0,
             'price' => 100,
             'sale' => 50,
+//            'group_id' =>$request->input('group_id') ,
         ];
 
         if (($songId === null && $imgExtension) || ($songId !== null && $imgExtension)) {
@@ -168,6 +169,10 @@ class SongController extends Controller
         if (($songId === null && $audioExtension) || ($songId !== null && $audioExtension)) {
 
             $dataToSave = array_add($dataToSave, 'audio', $audioName);
+        }
+
+        if($groupId) {
+            $dataToSave = array_add($dataToSave, 'group_id', $groupId);
         }
 
         return $dataToSave;

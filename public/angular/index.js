@@ -64,6 +64,7 @@ angular.module('angularMaterialAdmin', ['ngAnimate', 'ui.router', 'ui.bootstrap'
             .state('home', {
                 url: '',
                 templateUrl: '/views/app/home/index.html',
+                controller: 'MainController',
                 abstract: true
             })
             .state('home.home', {

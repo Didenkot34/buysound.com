@@ -7,21 +7,24 @@
     songsAdminCtrl.$inject = [
         '$scope',
         'songsService',
+        'groupService',
         '$mdToast',
         '$mdDialog',
         '$sce'
     ];
 
-    function songsAdminCtrl($scope, songsService, $mdToast, $mdDialog, $sce) {
+    function songsAdminCtrl($scope, songsService,groupService, $mdToast, $mdDialog, $sce) {
 
         $scope.getAudioUrl = getAudioUrl;
         $scope.getAllSongs = getAllSongs;
+        $scope.getAllGroups = getAllGroups;
         $scope.addSong = addSong;
         $scope.deleteSong = deleteSong;
         $scope.editSong = editSong;
 
 
         $scope.getAllSongs();
+        $scope.getAllGroups();
 
         function getAudioUrl(song) {
             var url = '/uploads/songs/audio/' + song.id + '/' + song.audio;
@@ -40,6 +43,18 @@
                     console.log('Error Get All');
                 });
         };
+        function getAllGroups() {
+            groupService.getAll()
+                .then(function successCallback(response) {
+                    $scope.groups = null;
+                    if (_.get(response, 'data.groups.length', false)) {
+                        $scope.groups = response.data.groups;
+                    }
+
+                }, function errorCallback() {
+                    console.log('Error Get All');
+                });
+        };
         function addSong(ev) {
 
             $mdDialog.show({
@@ -48,7 +63,8 @@
                 parent: angular.element(document.body),
                 targetEvent: ev,
                 locals: {
-                    items: false
+                    items: false,
+                    groups: $scope.groups,
                 },
                 clickOutsideToClose: true,
                 fullscreen: true
@@ -88,7 +104,8 @@
                 parent: angular.element(document.body),
                 targetEvent: ev,
                 locals: {
-                    items: song
+                    items: song,
+                    groups: $scope.groups,
                 },
                 clickOutsideToClose: true,
                 fullscreen: true

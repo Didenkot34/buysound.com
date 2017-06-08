@@ -41,6 +41,16 @@
                 </div>
 
                 <md-input-container class="md-block">
+                    <label>Выбор Группы</label>
+
+                    <md-select name="rating" ng-model="song.group_id">
+                        <md-option ng-value="group.id" ng-repeat="group in groups">{{ group.name }}</md-option>
+                    </md-select>
+                    <div ng-messages="songForm.rating.$error">
+                        <div ng-message="required">This is required.</div>
+                    </div>
+                </md-input-container>
+                <md-input-container class="md-block">
                     <label>Description</label>
                     <textarea ng-model="song.description" required md-no-asterisk name="description"  md-maxlength="450" rows="5" md-select-on-focus></textarea>
                     <div ng-messages="songForm.description.$error">
