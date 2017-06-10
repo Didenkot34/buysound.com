@@ -1,0 +1,10 @@
+<md-list>
+    <md-list-item ng-repeat="song in songs|filter:search:strict"  class="noright md-whiteframe-1dp">
+        <img ng-src="/uploads/songs/img/{{song.id}}/{{song.img}}" alt="song.name" class="md-avatar img-responsive" />
+        <p>{{song.name}}</p>
+        <audio controls ng-src="{{getAudioUrl(song)}}" audioplayer controls></audio>
+        <md-checkbox class="md-secondary" ng-model="person.selected"></md-checkbox>
+        <md-icon md-svg-icon="communication:email"  ng-click="doSecondaryAction($event)" aria-label="Send Email" class="md-secondary md-hue-3" ></md-icon>
+        <md-icon class="md-secondary" ng-click="doSecondaryAction($event)" aria-label="Chat" md-svg-icon="communication:message"></md-icon>
+    </md-list-item>
+</md-list>

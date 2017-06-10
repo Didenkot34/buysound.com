@@ -1,148 +1,26 @@
+<!--Home Header-->
+<ng-include src="'/views/app/home/home-partials/home-header.html'">
+</ng-include>
+<!--END Home Header-->
+
+<!-- Song -->
 <div layout="row" layout-wrap>
-    <!-- IMG-->
     <div flex="70" flex-offset="15">
         <md-card>
-            <img ng-src="/upload/music.jpg" class="md-card-image" alt="Washed Out">
-            <md-card-actions layout="row" layout-align="end center">
-                <!--<md-button class="md-icon-button" aria-label="Favorite">-->
-                <!--<md-icon md-svg-icon="img/icons/favorite.svg"></md-icon>-->
-                <!--</md-button>-->
-                <!--<md-button class="md-icon-button" aria-label="Settings">-->
-                <!--<md-icon md-svg-icon="img/icons/menu.svg"></md-icon>-->
-                <!--</md-button>-->
-                <!--<md-button class="md-icon-button" aria-label="Share">-->
-                <!--<md-icon md-svg-icon="img/icons/share-arrow.svg"></md-icon>-->
-                <!--</md-button>-->
-            </md-card-actions>
-        </md-card>
-    </div>
-    <!-- IMG END -->
-</div>
-
-<div layout="row" layout-wrap>
-    <div layout="row" flex="70" flex-offset="15">
-        <div flex="30">
-            <md-card>
-                <!--<md-card-title>-->
-                <!--<md-card-title-text>-->
-                <!--<span class="md-headline">Card with image</span>-->
-                <!--<span class="md-subhead">Small</span>-->
-                <!--</md-card-title-text>-->
-                <md-card-title-media>
-                    <div class="md-media-sm card-media">
-                        <img ng-src="/upload/sound.png" class="md-card-image" alt="Washed Out" >
-                    </div>
-                </md-card-title-media>
-                <!--</md-card-title>-->
-                <!--<md-card-actions layout="row" layout-align="end center">-->
-                <!--<md-button>Action 1</md-button>-->
-                <!--<md-button>Action 2</md-button>-->
-                <!--</md-card-actions>-->
-            </md-card>
-        </div>
-        <div flex>
-            <md-card>
-                <md-card-title>
-                    <md-card-title-text>
-                        <span class="md-headline">Card with image</span>
-                        <span class="md-subhead">Song name</span>
-                        <md-switch ng-model="data.cb2" aria-label="Switch 2" ng-true-value="'yup'" ng-false-value="'nope'" class="md-warn">
-                            Switch 2 (md-warn): {{ data.cb2 }}
-                        </md-switch>
-                    </md-card-title-text>
-                </md-card-title>
-                <md-card-actions layout="row" layout-align="end center">
-                <md-button>Action 1</md-button>
-                <md-button>Action 2</md-button>
-                </md-card-actions>
-            </md-card>
-        </div>
-    </div>
-</div>
-
-<div layout="row" layout-wrap>
-    <div flex="70" flex-offset="15">
-        <div class="table-responsive-vertical md-whiteframe-z1">
-            <table id="table" class="table table-hover table-bordered table-responsive">
-                <thead>
-                <tr>
-                    <th>#</th>
-                    <th>Img</th>
-                    <th>
-                        <md-tooltip md-direction="down">
-                            Название песни
-                        </md-tooltip>
-                        Name
-                    </th>
-                    <th>
-                       Audio
-                    </th>
-                    <th>Action
-                        <md-button ng-click="addSong($event)" aria-label="Edit" class="md-fab md-mini md-raised">
-                            <md-tooltip md-direction="down">
-                                Add song
-                            </md-tooltip>
-                            <md-icon md-svg-src="/img/icons/add.svg"></md-icon>
-                        </md-button>
-                    </th>
-                </tr>
-                </thead>
-                <tbody>
-                <tr ng-if="songs" ng-repeat="song in songs|filter:search:strict" ng-dblclick="editSong($event,song)">
-                    <td data-title="ID">{{$index + 1}}</td>
-                    <td data-title="Issue">
-                        <img width="80" ng-src="/uploads/songs/img/{{song.id}}/{{song.img}}" class="img img-responsive img-thumbnail" alt="song.name">
-                    </td>
-                    <td data-title="Issue">{{song.name}}</td>
-                    <td >
-                        <audio controls ng-src="{{getAudioUrl(song)}}" audioplayer controls></audio>
-                    </td>
-                    <td data-title="Progress">
-                        <md-button ng-click="editSong($event,song)" aria-label="Edit" class="md-fab md-mini md-raised">
-                            <md-tooltip md-direction="down">
-                                Edit
-                            </md-tooltip>
-                            <md-icon md-svg-src="/img/icons/edit.svg"></md-icon>
-                        </md-button>
-                        <md-button ng-click="deleteSong($event,song)" aria-label="delete" class="md-fab md-mini md-raised">
-                            <md-tooltip md-direction="down">
-                                Delete
-                            </md-tooltip>
-                            <md-icon md-svg-src="/img/icons/delete.svg"></md-icon>
-                        </md-button>
-                    </td>
-                </tr>
-                </tbody>
-            </table>
-        </div>
-    </div>
-</div>
-<div layout="row" layout-wrap>
-    <div flex-offset="15" flex="70">
-        <md-card>
-            <!--<img ng-src="{{imagePath}}" class="md-card-image" alt="Washed Out">-->
             <md-card-title>
                 <md-card-title-text>
-                    <span class="md-headline">Icon action buttons</span>
+                    <md-input-container>
+                        <label><i class="material-icons">search</i></label>
+                        <input type="text" ng-model="search.$">
+                    </md-input-container>
                 </md-card-title-text>
             </md-card-title>
             <md-card-content>
-                <p>
-                    The titles of Washed Out's breakthrough song and the first single from Paracosm share the
-                    two most important words in Ernest Greene's musical language: feel it. It's a simple request, as well...
-                </p>
+                <ng-include src="'/views/app/partials/songs-list.html'">
+                </ng-include>
             </md-card-content>
-            <md-card-actions layout="row" layout-align="end center">
-                <md-button class="md-icon-button" aria-label="Favorite">
-                    <md-icon md-svg-icon="/img/icons/favorite.svg"></md-icon>
-                </md-button>
-                <md-button class="md-icon-button" aria-label="Settings">
-                    <md-icon md-svg-icon="/img/icons/menu.svg"></md-icon>
-                </md-button>
-                <md-button class="md-icon-button" aria-label="Share">
-                    <md-icon md-svg-icon="/img/icons/share.svg"></md-icon>
-                </md-button>
-            </md-card-actions>
+
         </md-card>
     </div>
 </div>
+<!-- END Songs-->

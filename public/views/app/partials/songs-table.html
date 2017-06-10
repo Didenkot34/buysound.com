@@ -1,0 +1,57 @@
+<div layout="row" layout-wrap>
+    <div flex="70" flex-offset="15">
+        <div class="table-responsive-vertical md-whiteframe-z1">
+            <table id="table" class="table table-hover table-bordered table-responsive">
+                <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Img</th>
+                    <th>
+                        <md-tooltip md-direction="down">
+                            Название песни
+                        </md-tooltip>
+                        Name
+                    </th>
+                    <th>
+                        Audio
+                    </th>
+                    <th>Action
+                        <md-button ng-click="addSong($event)" aria-label="Edit" class="md-fab md-mini md-raised">
+                            <md-tooltip md-direction="down">
+                                Add song
+                            </md-tooltip>
+                            <md-icon md-svg-src="/img/icons/add.svg"></md-icon>
+                        </md-button>
+                    </th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr ng-if="songs" ng-repeat="song in songs|filter:search:strict" ng-dblclick="editSong($event,song)">
+                    <td data-title="ID">{{$index + 1}}</td>
+                    <td data-title="Issue">
+                        <img width="80" ng-src="/uploads/songs/img/{{song.id}}/{{song.img}}" class="img img-responsive img-thumbnail" alt="song.name">
+                    </td>
+                    <td data-title="Issue">{{song.name}}</td>
+                    <td >
+                        <audio controls ng-src="{{getAudioUrl(song)}}" audioplayer controls></audio>
+                    </td>
+                    <td data-title="Progress">
+                        <md-button ng-click="editSong($event,song)" aria-label="Edit" class="md-fab md-mini md-raised">
+                            <md-tooltip md-direction="down">
+                                Edit
+                            </md-tooltip>
+                            <md-icon md-svg-src="/img/icons/edit.svg"></md-icon>
+                        </md-button>
+                        <md-button ng-click="deleteSong($event,song)" aria-label="delete" class="md-fab md-mini md-raised">
+                            <md-tooltip md-direction="down">
+                                Delete
+                            </md-tooltip>
+                            <md-icon md-svg-src="/img/icons/delete.svg"></md-icon>
+                        </md-button>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

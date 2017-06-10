@@ -1,0 +1,52 @@
+<md-toolbar layout="row" layout-align="end center">
+    <!--<section layout-align="start center" layout-fill flex>-->
+    <!--<md-button hide-gt-sm ng-click="toggleItemsList()" aria-label="Menu">-->
+    <!--<i class="material-icons">menu</i>-->
+    <!--</md-button>-->
+    <!--</section>-->
+    <section layout-align="end center">
+
+        <md-button class="toolbar-button" aria-label="Songs">
+            <md-tooltip md-direction="down">
+                Песни
+            </md-tooltip>
+            <md-icon md-svg-src="/img/icons/music-player.svg"></md-icon>
+        </md-button>
+
+        <md-button class="toolbar-button" aria-label="Groups">
+            <md-tooltip md-direction="down">
+                Группы
+            </md-tooltip>
+            <md-icon md-svg-src="/img/icons/groups.svg"></md-icon>
+        </md-button>
+
+        <md-button class="toolbar-button" aria-label="About">
+            <md-tooltip md-direction="down">
+                О нас
+            </md-tooltip>
+            <md-icon md-svg-src="/img/icons/question.svg"></md-icon>
+        </md-button>
+
+        <md-button class="toolbar-button" aria-label="Home">
+            <md-tooltip md-direction="down">
+                Домой
+            </md-tooltip>
+            <md-icon md-svg-src="/img/icons/home-icon-silhouette-white.svg"></md-icon>
+        </md-button>
+
+        <!--<md-button class="toolbar-button" aria-label="Search">-->
+        <!--<i class="material-icons">search</i>-->
+        <!--<md-tooltip md-direction="down">-->
+        <!--Поиск-->
+        <!--</md-tooltip>-->
+        <!--</md-button>-->
+
+        <md-button class="toolbar-button" aria-label="Notifications" >
+            <i class="material-icons">notifications</i>
+            <span class="notifications-label">5</span>
+        </md-button>
+        <md-button class="toolbar-button" aria-label="Settings" ng-click="toggleRightSidebar()">
+            <i class="material-icons">menu</i>
+        </md-button>
+    </section>
+</md-toolbar>
