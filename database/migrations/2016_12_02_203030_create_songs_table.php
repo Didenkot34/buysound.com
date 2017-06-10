@@ -1,11 +1,15 @@
 <?php
 
+use App\MyMigration\MyMigration;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
-use Illuminate\Database\Migrations\Migration;
 
-class CreateSongsTable extends Migration
+class CreateSongsTable extends MyMigration
 {
+
+    public $tableName = 'songs';
+    protected $foreignTable = 'groups';
+    protected $groupId = 'group_id';
     /**
      * Run the migrations.
      *
@@ -13,17 +17,24 @@ class CreateSongsTable extends Migration
      */
     public function up()
     {
-        Schema::create('songs', function (Blueprint $table) {
+        Schema::create($this->tableName, function (Blueprint $table) {
             $table->increments('id');
+            $table->integer($this->groupId)->unsigned()->nullable();
             $table->string('name');
             $table->string('slug');
-            $table->mediumInteger('price')->unsigned();
-            $table->tinyInteger('sale')->unsigned()->default(0);
+            $table->float('price', 10, 2);
+            $table->float('sale', 6, 2);
             $table->string('description');
-            $table->string('img');
+            $table->string('img', 25);
+            $table->string('audio', 25);
             $table->tinyInteger('rating')->unsigned()->default(1);
             $table->boolean('active')->default(false);
             $table->timestamps();
+            
+            //create index
+            $this->createAllIndex($table);
+            //create FK
+            $this->createAllFK($table);
         });
     }
 
@@ -34,6 +45,30 @@ class CreateSongsTable extends Migration
      */
     public function down()
     {
-        Schema::drop('songs');
+        Schema::table($this->tableName, function (Blueprint $table) {
+            // drop all FK
+            $this->dropAllFK($table);
+            //drop all Index
+            $this->dropAllIndex($table);
+        });
+        
+        Schema::drop($this->tableName);
+    }
+
+    /**
+     * @return array
+     */
+    public function getDataForForeignKey()
+    {
+        $data = [
+            $this->groupId => [
+                self::FOREIGN_TABLE    => $this->foreignTable,
+                self::FOREIGN_TABLE_ID => 'id',
+                self::ON_DELETE        => 'set null',
+                self::ON_UPDATE        => 'CASCADE',
+            ],
+        ];
+
+        return $data;
     }
 }

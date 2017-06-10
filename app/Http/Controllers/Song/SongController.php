@@ -159,6 +159,7 @@ class SongController extends Controller
             'active' => $request->input('active') == 'true' ? 1 : 0,
             'price' => 100,
             'sale' => 50,
+//            'sale' => $request->input('sale'),
 //            'group_id' =>$request->input('group_id') ,
         ];
 

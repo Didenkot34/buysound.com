@@ -1,33 +1,33 @@
 <?php
 
+use App\MyMigration\MyMigration;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
-use Illuminate\Database\Migrations\Migration;
 
-class CreateJunctionTableForSongsAndStylesTables extends Migration
+class CreateJunctionTableForSongsAndStylesTables extends MyMigration
 {
     /**
      * Run the migrations.
      *
      * @return void
      */
+    public $tableName = 'songs_styles';
+    public $songsId   = 'songs_id';
+    public $stylesId  = 'styles_id';
+
     public function up()
     {
-        Schema::create('songs_styles', function (Blueprint $table) {
+        Schema::create($this->tableName, function (Blueprint $table) {
 
-            $table->integer('songs_id')->unsigned();
-            $table->integer('styles_id')->unsigned();
-            $table->primary(['songs_id', 'styles_id']);
+            $table->integer($this->songsId)->unsigned();
+            $table->integer($this->stylesId)->unsigned();
+            $table->primary([$this->songsId, $this->stylesId]);
 
-            $table->foreign('songs_id')
-                ->references('id')->on('songs')
-                ->onDelete('cascade')
-                ->onUpdate('cascade');
+            //create all index
+            $this->createAllIndex($table);
 
-            $table->foreign('styles_id')
-                ->references('id')->on('styles')
-                ->onDelete('cascade')
-                ->onUpdate('cascade');
+            //create all FK
+            $this->createAllFK($table);
 
         });
     }
@@ -39,6 +39,36 @@ class CreateJunctionTableForSongsAndStylesTables extends Migration
      */
     public function down()
     {
-        Schema::drop('songs_styles');
+        Schema::table($this->tableName, function (Blueprint $table) {
+            // drop all FK
+            $this->dropAllFK($table);
+            //drop all Index
+            $this->dropAllIndex($table);
+        });
+        Schema::drop($this->tableName);
     }
+
+    /**
+     * @return array
+     */
+    public function getDataForForeignKey()
+    {
+        $data = [
+            $this->songsId => [
+                self::FOREIGN_TABLE    => 'songs',
+                self::FOREIGN_TABLE_ID => 'id',
+                self::ON_DELETE        => 'CASCADE',
+                self::ON_UPDATE        => 'CASCADE',
+            ],
+            $this->stylesId => [
+                self::FOREIGN_TABLE    => 'styles',
+                self::FOREIGN_TABLE_ID => 'id',
+                self::ON_DELETE        => 'CASCADE',
+                self::ON_UPDATE        => 'CASCADE',
+            ],
+        ];
+
+        return $data;
+    }
+
 }

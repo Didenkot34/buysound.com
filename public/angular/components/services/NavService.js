@@ -30,7 +30,7 @@
                 sref: 'admin.table'
             },
             {
-                name: 'Home',
+                name: 'Главная',
                 icon: 'view_module',
                 sref: 'home.home'
             }
