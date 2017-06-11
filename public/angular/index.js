@@ -9,7 +9,6 @@ angular.module('angularMaterialAdmin', ['ngAnimate', 'ui.router', 'ui.bootstrap'
                 url: '',
                 templateUrl: '/views/app/main.html',
                 controller: 'MainController',
-                controllerAs: 'vm',
                 abstract: true
             })
             .state('admin.dashboard', {
@@ -23,7 +22,6 @@ angular.module('angularMaterialAdmin', ['ngAnimate', 'ui.router', 'ui.bootstrap'
                 url: '/profile',
                 templateUrl: '/views/app/profile.html',
                 controller: 'ProfileController',
-                controllerAs: 'vm',
                 data: {
                     title: 'Profile'
                 }
@@ -31,7 +29,6 @@ angular.module('angularMaterialAdmin', ['ngAnimate', 'ui.router', 'ui.bootstrap'
             .state('admin.table', {
                 url: '/table',
                 controller: 'groupAdminCtrl',
-                controllerAs: 'vm',
                 templateUrl: '/views/app/table.html',
                 data: {
                     title: 'Table'
