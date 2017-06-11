@@ -63,6 +63,7 @@
     <script src="/angular/components/services/groupService.js"></script>
     <script src="/angular/components/services/NavService.js"></script>
     <script src="/angular/components/services/songsService.js"></script>
+    <script src="/angular/models/CRUD.js"></script>
     <script src="/angular/components/directives/fileInputDirective.js"></script>
     <script src="/angular/components/directives/messagesSection.js"></script>
     <script src="/angular/components/directives/panelWidget.js"></script>

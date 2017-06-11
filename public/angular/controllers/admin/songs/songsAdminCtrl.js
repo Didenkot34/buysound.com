@@ -6,14 +6,15 @@
 
     songsAdminCtrl.$inject = [
         '$scope',
-        'songsService',
         'groupService',
         '$mdToast',
         '$mdDialog',
-        '$sce'
+        '$sce',
+        'APP',
+        'CRUD'
     ];
 
-    function songsAdminCtrl($scope, songsService,groupService, $mdToast, $mdDialog, $sce) {
+    function songsAdminCtrl($scope, groupService, $mdToast, $mdDialog, $sce, APP, CRUD) {
 
         $scope.getAudioUrl = getAudioUrl;
         $scope.getAllSongs = getAllSongs;
@@ -32,7 +33,7 @@
         };
 
         function getAllSongs() {
-            songsService.getAll()
+            CRUD.getAll(APP.SONG_MODEL)
                 .then(function successCallback(response) {
                     $scope.songs = null;
                     if (_.get(response, 'data.songs.length', false)) {
@@ -84,7 +85,7 @@
 
             $mdDialog.show(confirm).then(function () {
 
-                songsService.deleteSong(song.id)
+                CRUD.delete(APP.SONG_MODEL, song.id)
                     .then(function successCallback(response) {
                         $scope.getAllSongs();
                     }, function errorCallback() {

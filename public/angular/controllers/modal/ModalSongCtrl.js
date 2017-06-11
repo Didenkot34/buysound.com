@@ -2,12 +2,12 @@
     'use strict';
 
     angular
-        .module('app')
+        .module('angularMaterialAdmin')
         .controller('ModalSongCtrl', ModalSongCtrl);
 
-    ModalSongCtrl.$inject = ['$scope', 'songsService', '$mdDialog', 'items','groups', '$mdToast', '$timeout'];
+    ModalSongCtrl.$inject = ['$scope', '$mdDialog', 'items','groups', '$mdToast', '$timeout', 'CRUD', 'APP'];
 
-    function ModalSongCtrl($scope, songsService, $mdDialog, items, groups, $mdToast, $timeout) {
+    function ModalSongCtrl($scope, $mdDialog, items, groups, $mdToast, $timeout, CRUD, APP) {
 
         $scope.song = items || {};
 
@@ -25,13 +25,13 @@
         $scope.createSong = createSong;
         $scope.cancel = cancel;
 
-        function edit(group) {
+        function edit(data) {
 
             if ($scope.songForm.$invalid) {
                 return false
             }
 
-            var songData = angular.copy(group);
+            var songData = angular.copy(data);
 
             if (items === false) {
                 $scope.createSong(songData);
@@ -40,7 +40,7 @@
                 songData.img = getFileOriginalExtension('img');
                 songData.audio = getFileOriginalExtension('audio');
 
-                songsService.update(songData, songData.id)
+                CRUD.update(APP.SONG_MODEL, songData)
                     .then(function successCallback(response) {
                         if (response.data.imgName || response.data.audioName) {
                             uploadImg(response);
@@ -52,6 +52,7 @@
                     });
             }
         };
+
         function cancel(song) {
             $mdDialog.hide(song);
         };
@@ -71,7 +72,7 @@
             formData.append('id', response.data.id);
             formData.append('imgName', response.data.imgName);
             formData.append('audioName', response.data.audioName);
-            songsService.uploadFiles(formData)
+            CRUD.uploadFiles(formData)
                 .then(function successCallback(response) {
                     console.log('Saved images');
                 }, function errorCallback() {
@@ -96,13 +97,14 @@
             }
 
 
-            songsService.save(songData)
+            CRUD.save(APP.SONG_MODEL, songData)
                 .then(function successCallback(response) {
                     uploadImg(response);
                     showMessageInToaster('Сохраннено', 'success');
                     $mdDialog.hide(songData);
                 }, function errorCallback(response) {
                     var message = _.get(response, 'data.name.0', 'Произошла системная ошибка, попробуйте позже');
+                    console.log(response);
                     showMessageInToaster(message, 'error');
                 });
 

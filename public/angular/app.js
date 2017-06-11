@@ -2,7 +2,7 @@
 (function() {
     'use strict';
 
-    angular
+   var module = angular
         .module('app',[
            // 'ui.router',
             //'ui.bootstrap',
@@ -11,4 +11,11 @@
             'ngMessages',
             'lfNgMdFileInput'
         ]);
+
+        module.constant('APP', {
+        SONG_MODEL  : 'songs',
+        GROUP_MODEL : 'groups',
+    });
+
+    return module;
 })();
