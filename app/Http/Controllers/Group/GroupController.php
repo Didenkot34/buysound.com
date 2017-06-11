@@ -10,14 +10,15 @@ use App\Models\Group;
 
 class GroupController extends Controller
 {
-    public function getAll()
+
+    public function index()
     {
         return response()->json([
             'groups' => Group::orderBy('rating', 'asc')->get(),
         ]);
     }
 
-    public function save(Request $request)
+    public function store(Request $request)
     {
         $messages = [
             'unique' => 'Имя "' . $request->input('name') . '" уже существует.',
@@ -27,7 +28,7 @@ class GroupController extends Controller
         ], $messages);
 
         $dataToSave = $this->getDataToSave($request);
-        
+
         $id = Group::insertGetId($dataToSave);
 
         return response()->json([
@@ -36,36 +37,8 @@ class GroupController extends Controller
         ]);
     }
 
-    public function uploadImg(Request $request)
+    public function update(Request $request, $id)
     {
-        $id = $request->input('id');
-        $imgName = $request->input('imgName');
-
-        $pathToImg = 'uploads/groups/img/' . $id;
-        $this->uploadImage($pathToImg, $request);
-
-        return response()->json([
-            'id' => $id,
-            'imgName' => $imgName
-        ]);
-    }
-
-    public function deleteGroups($id)
-    {
-        
-        $group = Group::where('id', $id);
-        $pathToImg = 'uploads/groups/img/' . $id;
-        $this->deleteImg($pathToImg);
-        $group->delete();
-
-        return response()->json([
-            'success' => true
-        ]);
-    }
-
-    public function updateGroups(Request $request, $id)
-    {
-
         $imgExtension = $request->input('img');
         $dataToSave = $this->getDataToSave($request, $id);
         if ($imgExtension) {
@@ -81,10 +54,36 @@ class GroupController extends Controller
         ]);
     }
 
+    public function destroy($id)
+    {
+        $group = Group::where('id', $id);
+        $pathToImg = 'uploads/groups/img/' . $id;
+        $this->deleteImg($pathToImg);
+        $group->delete();
+
+        return response()->json([
+            'success' => true
+        ]);
+    }
+
+    public function uploadFiles(Request $request)
+    {
+        $id = $request->input('id');
+        $imgName = $request->input('imgName');
+
+        $pathToImg = 'uploads/groups/img/' . $id;
+        $this->uploadImage($pathToImg, $request);
+
+        return response()->json([
+            'id' => $id,
+            'imgName' => $imgName
+        ]);
+    }
+
     private function getDataToSave(Request $request, $groupId = null)
     {
         $imgExtension = $request->input('img');
-        $imgName = str_random(15)  . '.' . $imgExtension;
+        $imgName = str_random(15) . '.' . $imgExtension;
 
         $dataToSave = [
             'name' => $request->input('name'),
@@ -94,11 +93,11 @@ class GroupController extends Controller
             'active' => $request->input('active') == 'true' ? 1 : 0,
         ];
 
-        if ( ($groupId === null && $imgExtension) || ($groupId !== null && $imgExtension) ) {
+        if (($groupId === null && $imgExtension) || ($groupId !== null && $imgExtension)) {
 
             $dataToSave = array_add($dataToSave, 'img', $imgName);
         }
-        
+
         return $dataToSave;
     }
 

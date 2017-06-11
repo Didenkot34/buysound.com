@@ -5,29 +5,29 @@
         .module('app')
         .controller('ModalGroupCtrl', ModalGroupController);
 
-    ModalGroupController.$inject = ['$scope', 'groupService', '$mdDialog', 'items', '$mdToast', '$timeout'];
+    ModalGroupController.$inject = ['$scope', '$mdDialog', 'items', '$mdToast', '$timeout', 'APP', 'CRUD'];
 
-    function ModalGroupController($scope, groupService, $mdDialog, items, $mdToast, $timeout) {
+    function ModalGroupController($scope, $mdDialog, items, $mdToast, $timeout, APP, CRUD) {
 
         $scope.group = items || {};
 
-        $scope.title = items ? 'Редактировать "' + items.name +'"' : 'Добавить';
+        $scope.title = items ? 'Редактировать "' + items.name + '"' : 'Добавить';
 
         $scope.ratingValue = [
-            { 'id' : 1, 'name': 'Высокий' },
-            { 'id' : 2, 'name': 'Средний' },
-            { 'id' : 3, 'name': 'Низкий'  }
+            {'id': 1, 'name': 'Высокий'},
+            {'id': 2, 'name': 'Средний'},
+            {'id': 3, 'name': 'Низкий'}
         ];
         $scope.group.rating = items ? items.rating : '3';
 
 
-        $scope.edit        = edit;
+        $scope.edit = edit;
         $scope.createGroup = createGroup;
-        $scope.cancel      = cancel;
+        $scope.cancel = cancel;
 
         function edit(group) {
 
-            if($scope.groupForm.$invalid){
+            if ($scope.groupForm.$invalid) {
                 return false
             }
 
@@ -44,7 +44,7 @@
                     groupData.img = 0;
                 }
 
-                groupService.update(groupData, groupData.id)
+                CRUD.update(APP.GROUP_MODEL, groupData)
                     .then(function successCallback(response) {
                         if (response.data.imgName) {
                             uploadImg(response);
@@ -62,14 +62,14 @@
 
         function uploadImg(response) {
             var formData = new FormData();
-            angular.forEach($scope.img,function(obj){
-                if(!obj.isRemote){
+            angular.forEach($scope.img, function (obj) {
+                if (!obj.isRemote) {
                     formData.append('img', obj.lfFile);
                 }
             });
-                formData.append('id',response.data.id);
-                formData.append('imgName',response.data.imgName);
-            groupService.uploadImg(formData)
+            formData.append('id', response.data.id);
+            formData.append('imgName', response.data.imgName);
+            CRUD.uploadFiles(APP.GROUP_MODEL, formData)
                 .then(function successCallback(response) {
                     console.log('Saved images');
                 }, function errorCallback() {
@@ -77,11 +77,11 @@
                 });
         }
 
-         function createGroup(groupData) {
+        function createGroup(groupData) {
 
             groupData.img = getImgOriginalExtension();
             if (!groupData.img) {
-                showMessageInToaster('Вы забыли загрузить картинку','error');
+                showMessageInToaster('Вы забыли загрузить картинку', 'error');
                 return false;
             }
             if (!_.has(groupData, 'active')) {
@@ -89,13 +89,13 @@
             }
 
 
-            groupService.save(groupData)
+            CRUD.save(APP.GROUP_MODEL, groupData)
                 .then(function successCallback(response) {
                     uploadImg(response);
                     showMessageInToaster('Сохраннено', 'success');
                     $mdDialog.hide(groupData);
                 }, function errorCallback(response) {
-                   var message = _.get(response, 'data.name.0', 'Произошла системная ошибка, попробуйте позже');
+                    var message = _.get(response, 'data.name.0', 'Произошла системная ошибка, попробуйте позже');
                     showMessageInToaster(message, 'error');
                 });
 
@@ -103,7 +103,7 @@
 
         function getImgOriginalExtension() {
 
-            if (_.has($scope,'img.0')) {
+            if (_.has($scope, 'img.0')) {
 
                 var match = $scope.img[0].lfFileName.match(/[a-zA-Z]{3}$/);
 
@@ -114,7 +114,7 @@
             }
         }
 
-        function showMessageInToaster(message,type) {
+        function showMessageInToaster(message, type) {
             $mdToast.show(
                 {
                     template: '<md-toast  class="md-toast ">'

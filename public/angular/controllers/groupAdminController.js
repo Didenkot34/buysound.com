@@ -4,19 +4,19 @@
         .module('app')
         .controller('groupAdminCtrl', groupAdminCtrl);
 
-    groupAdminCtrl.$inject = ['$scope', 'groupService', '$mdToast', '$mdDialog'];
+    groupAdminCtrl.$inject = ['$scope', '$mdToast', '$mdDialog', 'APP', 'CRUD'];
 
-    function groupAdminCtrl($scope, groupService, $mdToast, $mdDialog) {
+    function groupAdminCtrl($scope, $mdToast, $mdDialog, APP, CRUD) {
 
         $scope.getAllGroups = getAllGroups;
-        $scope.deleteGroup  = deleteGroup;
-        $scope.editGroup    = editGroup;
-        $scope.addGroup     = addGroup;
+        $scope.deleteGroup = deleteGroup;
+        $scope.editGroup = editGroup;
+        $scope.addGroup = addGroup;
 
         $scope.getAllGroups();
 
         function getAllGroups() {
-            groupService.getAll()
+            CRUD.getAll(APP.GROUP_MODEL)
                 .then(function successCallback(response) {
                     $scope.groups = null;
                     if (_.get(response, 'data.groups.length', false)) {
@@ -27,7 +27,7 @@
                     console.log('Error Get All');
                 });
         };
-        
+
         function deleteGroup(ev, group) {
 
             var confirm = $mdDialog.confirm()
@@ -39,7 +39,7 @@
 
             $mdDialog.show(confirm).then(function () {
 
-                groupService.deleteGroup(group.id)
+                CRUD.delete(APP.GROUP_MODEL, group.id)
                     .then(function successCallback(response) {
                         $scope.getAllGroups();
                     }, function errorCallback() {
@@ -65,7 +65,6 @@
                 fullscreen: true
             }).then(function (answer) {
                 $scope.getAllGroups();
-                //groupService.update()
             }, function () {
             });
         };

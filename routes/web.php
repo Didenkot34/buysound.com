@@ -17,11 +17,8 @@ Route::get('/', function () {
 
 Auth::routes();
 //
-Route::get('/api/groups', 'Group\GroupController@getAll');
-Route::post('/api/groups', 'Group\GroupController@save');
-Route::put('/api/groups/{id}', 'Group\GroupController@updateGroups');
-Route::delete('/api/groups/{id}', 'Group\GroupController@deleteGroups');
-Route::post('/api/upload-group-img', 'Group\GroupController@uploadImg');
+Route::resource('groups', 'Group\GroupController');
+Route::post('groups-upload-files', 'Group\GroupController@uploadFiles');
 
 Route::resource('songs', 'Song\SongController');
-Route::post('upload-files', 'Song\SongController@uploadFiles');
+Route::post('songs-upload-files', 'Song\SongController@uploadFiles');

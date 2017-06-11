@@ -6,13 +6,14 @@
 
     HomeCtrl.$inject = [
         '$scope',
-        'songsService',
         '$mdToast',
         '$mdDialog',
-        '$sce'
+        '$sce',
+        'APP',
+        'CRUD'
     ];
 
-    function HomeCtrl($scope, songsService, $mdToast, $mdDialog, $sce) {
+    function HomeCtrl($scope, $mdToast, $mdDialog, $sce, APP, CRUD) {
 
         $scope.getAudioUrl = getAudioUrl;
         $scope.getAllSongs = getAllSongs;
@@ -28,12 +29,12 @@
         $scope.getAllSongs();
 
         function getAudioUrl(song) {
-            var url = '/uploads/songs/audio/' + song.id + '/' + song.audio;
+            var url = APP.PATH_FOLDER_AUDIO + song.id + '/' + song.audio;
             return $sce.trustAsResourceUrl(url);
         };
 
         function getAllSongs() {
-            songsService.getAll()
+            CRUD.getAll(APP.SONG_MODEL)
                 .then(function successCallback(response) {
                     $scope.songs = null;
                     if (_.get(response, 'data.songs.length', false)) {
@@ -72,7 +73,7 @@
 
             $mdDialog.show(confirm).then(function () {
 
-                songsService.deleteSong(song.id)
+                CRUD.delete(APP.SONG_MODEL, song.id)
                     .then(function successCallback(response) {
                         $scope.getAllSongs();
                     }, function errorCallback() {

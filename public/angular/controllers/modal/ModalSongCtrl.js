@@ -5,7 +5,7 @@
         .module('angularMaterialAdmin')
         .controller('ModalSongCtrl', ModalSongCtrl);
 
-    ModalSongCtrl.$inject = ['$scope', '$mdDialog', 'items','groups', '$mdToast', '$timeout', 'CRUD', 'APP'];
+    ModalSongCtrl.$inject = ['$scope', '$mdDialog', 'items', 'groups', '$mdToast', '$timeout', 'CRUD', 'APP'];
 
     function ModalSongCtrl($scope, $mdDialog, items, groups, $mdToast, $timeout, CRUD, APP) {
 
@@ -19,7 +19,7 @@
             {'id': 3, 'name': 'Низкий'}
         ];
         $scope.song.rating = items ? items.rating : '3';
-        
+
         $scope.groups = angular.copy(groups);
         $scope.edit = edit;
         $scope.createSong = createSong;
@@ -36,7 +36,7 @@
             if (items === false) {
                 $scope.createSong(songData);
             } else {
-                
+
                 songData.img = getFileOriginalExtension('img');
                 songData.audio = getFileOriginalExtension('audio');
 
@@ -72,7 +72,7 @@
             formData.append('id', response.data.id);
             formData.append('imgName', response.data.imgName);
             formData.append('audioName', response.data.audioName);
-            CRUD.uploadFiles(formData)
+            CRUD.uploadFiles(APP.SONG_MODEL, formData)
                 .then(function successCallback(response) {
                     console.log('Saved images');
                 }, function errorCallback() {

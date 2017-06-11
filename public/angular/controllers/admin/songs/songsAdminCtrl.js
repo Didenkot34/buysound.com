@@ -6,7 +6,6 @@
 
     songsAdminCtrl.$inject = [
         '$scope',
-        'groupService',
         '$mdToast',
         '$mdDialog',
         '$sce',
@@ -14,7 +13,7 @@
         'CRUD'
     ];
 
-    function songsAdminCtrl($scope, groupService, $mdToast, $mdDialog, $sce, APP, CRUD) {
+    function songsAdminCtrl($scope, $mdToast, $mdDialog, $sce, APP, CRUD) {
 
         $scope.getAudioUrl = getAudioUrl;
         $scope.getAllSongs = getAllSongs;
@@ -28,7 +27,7 @@
         $scope.getAllGroups();
 
         function getAudioUrl(song) {
-            var url = '/uploads/songs/audio/' + song.id + '/' + song.audio;
+            var url = APP.PATH_FOLDER_AUDIO + song.id + '/' + song.audio;
             return $sce.trustAsResourceUrl(url);
         };
 
@@ -45,7 +44,7 @@
                 });
         };
         function getAllGroups() {
-            groupService.getAll()
+            CRUD.getAll(APP.GROUP_MODEL)
                 .then(function successCallback(response) {
                     $scope.groups = null;
                     if (_.get(response, 'data.groups.length', false)) {
