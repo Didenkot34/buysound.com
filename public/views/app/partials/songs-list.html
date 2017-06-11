@@ -1,5 +1,5 @@
 <md-list>
-    <md-list-item ng-repeat="song in songs|filter:search:strict"  class="noright md-whiteframe-1dp">
+    <md-list-item ng-repeat="song in songs|filter:search:strict|sale:filter.sale"  class="noright md-whiteframe-1dp">
         <img ng-src="/uploads/songs/img/{{song.id}}/{{song.img}}" alt="song.name" class="md-avatar img-responsive" />
         <p>{{song.name}}</p>
         <audio controls ng-src="{{getAudioUrl(song)}}" audioplayer controls></audio>

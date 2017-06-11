@@ -35,7 +35,7 @@ angular.module('angularMaterialAdmin', ['ngAnimate', 'ui.router', 'ui.bootstrap'
                 }
             })
             .state('admin.songs', {
-                url: '/songs',
+                url: '/admin-songs',
                 controller: 'songsAdminCtrl',
                 // controllerAs: 'vm',
                 templateUrl: '/views/app/admin/songs/songs.html',
@@ -68,6 +68,14 @@ angular.module('angularMaterialAdmin', ['ngAnimate', 'ui.router', 'ui.bootstrap'
                 url: '/home',
                 templateUrl: '/views/app/home/home.html',
                 controller: 'HomeCtrl',
+                data: {
+                    title: 'Home'
+                }
+            })
+            .state('home.songs', {
+                url: '/songs',
+                templateUrl: '/views/app/home/songs/index.html',
+                controller: 'HomeSongsCtrl',
                 data: {
                     title: 'Home'
                 }

@@ -63,6 +63,7 @@
 <script src="/angular/components/services/NavService.js"></script>
 <script src="/angular/models/CRUD.js"></script>
 <script src="/angular/components/directives/fileInputDirective.js"></script>
+<script src="/angular/components/filters/filters.js"></script>
 <script src="/angular/components/directives/messagesSection.js"></script>
 <script src="/angular/components/directives/panelWidget.js"></script>
 <script src="/angular/controllers/admin/groups/groupAdminController.js"></script>
@@ -71,5 +72,6 @@
 <script src="/angular/controllers/admin/songs/modals/ModalSongCtrl.js"></script>
 <script src="/angular/controllers/MainController.js"></script>
 <script src="/angular/controllers/home/HomeCtrl.js"></script>
+<script src="/angular/controllers/home/songs/HomeSongsCtrl.js"></script>
 </body>
 </html>
